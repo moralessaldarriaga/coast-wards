@@ -1,0 +1,39 @@
+@use 'mapbox-gl/dist/mapbox-gl.css';
+
+#mapbox{
+    background-color: var(--color-white);
+    position: absolute; 
+    width: 100%;
+    top: 0; 
+    bottom: 0; 
+}
+
+.mapboxgl-ctrl{
+    &.mapboxgl-ctrl-attrib{
+        display: none;
+    }
+}
+
+.mapboxgl-popup-content{
+    color: var(--main-color);
+    padding: 3rem;
+}
+
+.mapbox{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+
+    &_legend{
+        z-index: 1;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+
+        span{
+            font-size: 72px;
+            color: var(--main-color);
+            cursor: pointer;
+        }
+    }
+}

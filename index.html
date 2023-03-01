@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#0076b7" />
+    <!-- <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet"> -->
+    <!-- <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script> -->
+    <title>COASTWARDS</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- <div class="navigation">
+      </div> -->
+      <div class="header main_content">
+          <img src="src/images/coastwards.svg" alt="Logo coastwards: A turtle on a mission" width="250" height="140">
+          <h1>Help Science study the risks of sea-level rise by uploading pictures of coasts</h1>
+          <h2>(No account. Just drag & drop.)</h2>
+          <div class="header_apps">
+            <a href="https://play.google.com/store/apps/details?id=org.coastwards.app" target="_blank" rel="nofollow noopener">
+              <img src="src/images/googleplay.png" alt="Google Play" width="200" height="60">
+            </a>
+            <a href="https://apps.apple.com/de/app/coastwards/id1494338545?l=en" target="_blank" rel="nofollow noopener">
+              <img src="src/images/appstore.png" alt="App Store" width="200" height="80">
+            </a>
+          </div>
+          <a href="" class="btn btn__border">More info</a>
+      </div>
+      <div class="guide">
+        <div class="main_content">
+          <div class="guide_block">
+            <div class="guide_video">
+              <!-- <iframe src="https://player.vimeo.com/video/206066163?color=0076b7&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen width="760" height="450"></iframe> -->
+            </div>
+            <h3 class="guide_toogle_js">Show transcript
+              <span class="material-icons material-symbols-outlined">
+                arrow_forward_ios
+              </span>
+            </h3>
+            <div class="guide_help">
+              <h1>How does my picture help?</h1>
+              <p>In a nutshell, it gives science what satellites cannot: A close-up image of a coast. The possibility to study the bigger picture, in as much detail as possible.</p>
+              <p>Here is how it works.</p>
+              <p>First, your image will be checked for information on the location it was taken, so we can place it on the map.</p>
+              <p>Then, it will be analysed by scientists and citizen scientists to determine the coastal type at that location. The more images we analyse, the more detail is added to a global map of what types of coasts exist and where.</p>
+              <p>This map is then fed into computer programs, called integrated assessment models, that help scientists make predictions on how different coasts respond under different circumstances.</p>
+              <p>These predictions inform policy makers at national and international levels on which actions to take and which countries need international support.</p>
+              <p>So, your images help scientists give their best advice on how to protect ourselves, our children and our grandchildren from sea-level rise.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mapbox">
+        <div id="mapbox">
+          <div class="mapbox_legend" id="mapbox_legend__js">
+            <span class="material-icons material-symbols-outlined">
+              expand_less
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
