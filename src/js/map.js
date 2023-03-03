@@ -63,7 +63,7 @@ export const useMapBox = () => {
       container: 'mapbox',
       projection: 'mercator',
       // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-      style: 'mapbox://styles/mapbox/light-v11',
+      style: 'mapbox://styles/eacostaz/clessg7db004101rncxj36i28',
       center: [-65.017, -16.457],
       zoom: 0
     });
