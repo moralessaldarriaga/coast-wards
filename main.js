@@ -2,32 +2,35 @@ import './app.scss';
 import { useMapBox } from './src/js/map';
 
 
-// map legend scroll to top element
-const scrollOfMap = () => {
-    const indexHome = document.getElementById('app');
-    indexHome.scrollIntoView({ 
-        behavior: 'smooth'
+// hidden block map actions
+const showMap = () => {
+    const showMapElement = document.getElementById('showMap');
+    showMapElement.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('mapBoxAction').classList.add('hidden');
+        // const map = useMapBox();
+        // map.setCenter([-99.1332, 19.4326]);
+        // map.setZoom(10);
     });
 } 
 
+const showShared = () => {
+    const showViewShared = document.getElementById('showShared');
+    showViewShared.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('mapBoxShared').classList.add('activeshow');
+    });
+}
+
+const closeShared = () => {
+    const showViewShared = document.getElementById('closeShared');
+    showViewShared.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('mapBoxShared').classList.remove('activeshow');
+    });
+}
+
+showMap();
+showShared();
+closeShared();
 useMapBox();
-document.getElementById('mapbox_legend__js').onclick = scrollOfMap;
-
-// document.querySelector('h1').innerHTML= `Hello`;
-
-// document.querySelector('#app').innerHTML = `
-//   <div>
-//     <a href="https://vitejs.dev" target="_blank">
-//       <img src="/vite.svg" class="logo" alt="Vite logo" />
-//     </a>
-//     <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-//       <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-//     </a>
-//     <h1>Hello Vite!</h1>
-//     <div class="card">
-//       <button id="counter" type="button"></button>
-//     </div>
-//   </div>
-// `
-
-// setupCounter(document.querySelector('#counter'))

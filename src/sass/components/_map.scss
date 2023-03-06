@@ -14,15 +14,224 @@
     }
 }
 
+.mapboxgl-popup{
+    z-index: 2;
+}
+
 .mapboxgl-popup-content{
     color: var(--main-color);
-    padding: 3rem;
+    padding: 0;
+    box-shadow: 0 16px 24px 2px rgb(0 0 0 / 14%), 0 6px 30px 5px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
+    overflow: hidden;
 }
+
+.popup_info{
+    display: flex;
+    place-content: center;
+    place-items: center;
+    flex-direction: column;
+    max-width: 500px;
+    max-height: 500px;
+    font-family: var(--font-roboto);
+    font-size: 1rem;
+    font-weight: 300;
+
+    @media (orientation: landscape) {
+        width: 80vh;
+        height: 80vh;
+    }
+
+    @media (orientation: portrait) {
+        width: 80vw;
+        height: 80vw;
+    }
+
+    &_image{
+        background-size: cover;
+        background-position: 50%;
+        height: 100%;
+        width: 100%;
+
+        @media (orientation: portrait) {
+            min-height: 20vw;
+        }
+    }
+
+    &_bar{
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background: linear-gradient(180deg,rgba(0,0,0,.3) 0,transparent);
+        padding: 10px 10px 20px;
+        color: var(--color-white);
+        direction: ltr;
+    
+        &_report{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--color-white);
+            opacity: .5;
+            display: flex;
+
+            span{
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    &_actions{
+        padding: .6rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &_type{
+            padding: 0.5rem 1rem;
+            background: var(--main-color);
+            border-radius: 4px;
+            color: var(--color-white);
+        }
+
+        &_close{
+            color: var(--main-color);
+            cursor: pointer;
+            display: flex;
+        }
+    }
+}
+
 
 .mapbox{
     position: relative;
     width: 100vw;
     height: 100vh;
+
+    &_actions{
+        display: flex;
+        flex-direction: column;
+        place-content: center;
+        place-items: center;
+        background: hsla(0,0%,100%,.85);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        color: var(--color-black);
+
+        //animation
+        visibility: visible;
+        backface-visibility: visible;
+        opacity: 1;
+        transition: all 600ms ease;
+
+        &.hidden{
+            visibility: hidden;
+            backface-visibility: hidden;
+            opacity: 0;
+            transition: all 600ms ease;
+        }
+        
+        h1{
+            font-weight: 400;
+        }
+
+        .eepurl{
+            margin: 2rem 0 0 0;
+            color: var(--main-color);
+            font-weight: 400;
+        }
+
+        &_block{
+            margin: 2.5rem 0 0 0;
+            display: flex;
+            gap: 30px;
+            place-content: center;
+            place-items: center;
+            text-transform: uppercase;
+        }
+
+        &_btns{
+            display: flex;
+            flex-direction: column;
+            place-content: center;
+            place-items: center;
+            gap: 10px;
+            
+            a{
+                display: flex;
+                place-content: center;
+                place-items: center;
+                width: 66px;
+                height: 66px;
+                background: var(--main-color);
+                border-radius: 50%;
+                box-shadow: 0 1px 1.5px 0 rgb(0 0 0 / 12%), 0 1px 1px 0 rgb(0 0 0 / 24%);
+
+                span{
+                    color: var(--color-white);
+                }
+            }
+        }
+    }
+
+    &_shared{
+        padding: 2rem 0;
+        display: flex;
+        background-color: var(--color-white);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        z-index: 3;
+
+        //animation
+        visibility: hidden;
+        backface-visibility: hidden;
+        opacity: 0;
+        transition: all 600ms ease;
+        color: var(--color-black);
+
+        &_block{
+            --padding: 0em;
+            width: min(100% - var(--padding), 760px);
+            margin-inline: auto;
+        }
+    
+        h1{
+            font-family: var(--font-roboto-slab);
+            margin: 0 0 2rem 0;
+        }
+
+        p{
+            margin: 0 0 1rem 0;
+        }
+
+        a{
+            color: var(--main-color);
+            font-weight: 600;
+        }
+
+        &_action{
+            display: flex;
+            justify-content: flex-end;
+            margin: 0 0 2rem 0;
+
+            span{
+                font-size: 2rem;
+                color: var(--main-color);
+            }
+        }
+
+
+        &.activeshow{
+            visibility: visible;
+            backface-visibility: visible;
+            opacity: 1;
+        }
+    }
 
     &_legend{
         z-index: 1;

@@ -1,4 +1,5 @@
 import mapboxgl from 'mapbox-gl';
+import { getData } from './getMarker';
 
 export const useMapBox = () => {
 
@@ -6,102 +7,158 @@ export const useMapBox = () => {
 
   mapboxgl.accessToken = apikey;
 
-  const geojson = {
-    'type': 'FeatureCollection',
-    'features': [
-      {
-        'type': 'Feature',
-        'properties': {
-          'message': 'Demo Edgar',
-          'iconSize': [60, 60]
-        },
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [-60.324462, -18.024695]
-        }
-      },
-      {
-        'type': 'Feature',
-        'properties': {
-          'message': 'Foo',
-          'iconSize': [60, 60]
-        },
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [-66.324462, -16.024695]
-        }
-      },
-      {
-        'type': 'Feature',
-        'properties': {
-          'message': 'Bar',
-          'iconSize': [50, 50]
-        },
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [-61.21582, -15.971891]
-        }
-      },
-      {
-        'type': 'Feature',
-        'properties': {
-          'message': 'Baz',
-          'iconSize': [40, 40]
-        },
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [-63.292236, -18.281518]
-        }
-      }
-    ]
-  };
+  // const markerSource = {
+  //   type: 'geojson',
+  //   data: {
+  //     type: 'FeatureCollection',
+  //     features: [
+  //       {
+  //         type: 'Feature',
+  //         geometry: {
+  //           type: 'Point',
+  //           coordinates: [-99.1332, 19.4326]
+  //         },
+  //         properties: {
+  //           image: 'https://placekitten.com/g/200/200',
+  //           date: 'July 2023',
+  //           comment: 'Lorem ipsum, lorem ipsum, lorem ipsum'
+  //         }
+  //       },
+  //       {
+  //         type: 'Feature',
+  //         geometry: {
+  //           type: 'Point',
+  //           coordinates: [-103.3500, 20.6667]
+  //         },
+  //         properties: {
+  //           image: 'https://placekitten.com/g/200/200',
+  //           date: 'July 2023',
+  //           comment: 'Lorem ipsum, lorem ipsum, lorem ipsum'
+  //         }
+  //       },
+  //       {
+  //         type: 'Feature',
+  //         geometry: {
+  //           type: 'Point',
+  //           coordinates: [-100.3167, 25.6667]
+  //         },
+  //         properties: {
+  //           image: 'https://placekitten.com/g/200/200',
+  //           date: 'July 2023',
+  //           comment: 'Lorem ipsum, lorem ipsum, lorem ipsum'
+  //         }
+  //       },
+  //     ]
+  //   }
+  // };
 
   if (mapboxgl.supported() === false) {
     alert('Your browser does not support Mapbox GL');
   } else {
+
+    const mapContainer = document.getElementById('mapbox');
+    mapContainer.innerHTML = '';
+
     const map = new mapboxgl.Map({
       container: 'mapbox',
-      projection: 'mercator',
-      // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
       style: 'mapbox://styles/eacostaz/clessg7db004101rncxj36i28',
-      center: [-65.017, -16.457],
-      zoom: 0
+      center: [-99.1332, 19.4326],
+      zoom: 5 //5
     });
 
     map.on("load", () => {
       map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-  
-      for (const marker of geojson.features) {
-        // Create a DOM element for each marker.
-        const el = document.createElement('div');
-        const width = marker.properties.iconSize[0];
-        const height = marker.properties.iconSize[1];
-        el.className = 'marker';
-        el.style.backgroundImage = `url(https://placekitten.com/g/${width}/${height}/)`;
-        el.style.width = `${width}px`;
-        el.style.height = `${height}px`;
-        el.style.backgroundSize = '100%';
-        
-        el.addEventListener('click', () => {
-          map.flyTo({
-            center: marker.geometry.coordinates,
-            zoom: 3,
-            speed: 1
-          });
+
+      getData().then(data => {
+        map.addLayer({
+          id: 'markers',
+          type: 'symbol',
+          source: {
+            type: 'geojson',
+            data: data
+          },
+          layout: {
+            'icon-image': 'marker-15'
+          },
         });
-        
-        // Add markers to the map.
-        new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates)
-        .setPopup(
-          new mapboxgl.Popup({ offset: 25 })
-          .setHTML(
-            `<h3>${marker.properties.title}</h3><p>${marker.properties.message}</p>`
-          )
-        )
-        .addTo(map);
-      }
+      });
     });
+
+    map.on('click', 'markers', function (e) {
+
+      // const coordinates = e.lngLat;
+      const coordinates = e.features[0].geometry.coordinates.slice();
+
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+
+      const coordinatesHtmlPopup = '<div class="popup_info">' +
+        '<div class="popup_info_bar">' +
+            '<a rel="noopener noreferrer" class="popup_info_bar_report" title="report image">' + 
+              '<span class="material-icons material-symbols-outlined"> warning </span>' +
+            '</a>' +
+            '<p>' + e.features[0].properties.date + '</p>' +
+        '</div>' +
+        '<div class="popup_info_image" style="background-image: url(' + e.features[0].properties.image + ')"></div>' +
+        '<div class="popup_info_actions">' + 
+          '<div class="popup_info_actions_type">' + e.features[0].geometry.type +'</div>' +
+            '<a href="#" rel="noopener noreferrer" class="popup_info_actions_close" title="close current popup">' +
+              '<span class="material-icons material-symbols-outlined"> close </span>' +
+            '</a>' +
+          '</div>' +
+      '</div>';
+
+      const popup = new mapboxgl.Popup({ closeButton: false, anchor: 'bottom' })
+        .setLngLat(coordinates)
+        .setHTML(coordinatesHtmlPopup)
+        .setMaxWidth("500");
+        // .setMaxHeight("600px");
+
+      popup.addTo(map);
+
+      map.flyTo({
+        center: coordinates,
+        offset: [0, 200],
+        zoom: 6,
+        speed: 1,
+        curve: 1.5,
+        essential: true
+      });
+
+      const popupClose = document.querySelectorAll(".popup_info_actions_close");
+
+      popupClose.forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault(); // Evita que la etiqueta se comporte como un enlace y recargue la página  
+          popup.remove();
+        });
+      });
+
+    });
+    
+    map.on('mouseenter', 'markers', () => {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'markers', () => {
+      map.getCanvas().style.cursor = '';
+    });
+
+
+    return map;
+    // let lastZoom = map.getZoom();
+
+    // map.on('zoom', () => {
+    //   const currentZoom = map.getZoom();
+    //   if (currentZoom > lastZoom) {
+    //     console.log(1);
+    //   } else {
+    //     console.log(2);
+    //   }
+    
+    //   lastZoom = currentZoom;
+    // });
   }
 
 }
