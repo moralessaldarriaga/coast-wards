@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#0076b7" />
     <title>COASTWARDS</title>
-    <script type="module" crossorigin src="/coast-wards/assets/index-322eef69.js"></script>
-    <link rel="stylesheet" href="/coast-wards/assets/index-7c4f16f4.css">
+    <script type="module" crossorigin src="/coast-wards/assets/index-20e04600.js"></script>
+    <link rel="stylesheet" href="/coast-wards/assets/index-943f9b39.css">
   </head>
   <body>
     <div id="app">
@@ -16,7 +16,7 @@
           <h1>¿Tienes fotos de costas?</h1>
           <div class="mapbox_actions_block">
             <div class="mapbox_actions_btns">
-              <a href="#" rel="noopener noreferrer">
+              <a href="#" rel="noopener noreferrer" id="showShared">
                 <span class="material-icons material-symbols-outlined">
                   share
                 </span>
@@ -24,7 +24,7 @@
               <p>Compártelo</p>
             </div>
             <div class="mapbox_actions_btns">
-              <a href="#" rel="noopener noreferrer">
+              <a href="#" rel="noopener noreferrer" id="useFormPhoto">
                 <span class="material-icons material-symbols-outlined">
                   add_a_photo
                 </span>
@@ -42,11 +42,20 @@
           </div>
           <a target="_blank" rel="noopener noreferrer" class="eepurl" href="http://eepurl.com/b1-BSH">Avísame cuando ...</a>
         </div>
-        <div class="mapbox_shared">
-          <h2>¡Comparte con amigos y familia!</h2>
-          <p>Hay muchas formas de compartir. Obviamente existe FACEBOOK y TWITTER. Y si eres de la nueva generación tal vez prefieras WHATSAPP o algún otro programa que no conozco, porque soy mayor, o porque existen otras plataformas en tu país.</p>
-          <p>Pero todos sabemos como funcionan las redes sociales. Si realmente quieres contactar con alguien, lo más efectivo sigue siendo hablan con esa persona.</p>
-          <p>¿Conoces a alguien que vive cerca de una costa?</p>
+        <div class="mapbox_shared" id="mapBoxShared">
+          <div class="main_content">
+            <div class="mapbox_shared_action">
+              <a href="" rel="noopener noreferrer" id="closeShared">
+                <span class="material-icons material-symbols-outlined">
+                  close
+                </span>
+              </a>
+            </div>
+            <h1>¡Comparte con amigos y familia!</h1>
+            <p>Hay muchas formas de compartir. Obviamente existe <a target="_blank" rel="noopener noreferrer" class="_share_link" href="https://www.facebook.com/sharer/sharer.php?u=http%3A//coastwards.org">FACEBOOK</a> y <a target="_blank" rel="noopener noreferrer" class="_share_link" href="https://twitter.com/intent/tweet?text=Help%20Science%20study%20the%20risks%20of%20Sea-level%20Rise%20by%20uploading%20pictures%20of%20coasts&amp;url=http%3A%2F%2Fcoastwards.org&amp;hashtags=showyourlove,gocoastwards">TWITTER</a>. Y si eres de la nueva generación tal vez prefieras <a target="_blank" rel="noopener noreferrer" class="_share_link" href="whatsapp://send?text=http%3A//coastwards.org">WHATSAPP</a> o algún otro programa que no conozco, porque soy mayor, o porque existen otras plataformas en tu país.</p>
+            <p>Pero todos sabemos como funcionan las redes sociales. Si realmente quieres contactar con alguien, lo más efectivo sigue siendo hablan con esa persona.</p>
+            <p>¿Conoces a alguien que vive cerca de una costa?</p>
+          </div>
         </div>
         <div id="mapbox">
         </div>
