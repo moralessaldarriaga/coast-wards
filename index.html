@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#0076b7" />
     <title>COASTWARDS</title>
-    <script type="module" crossorigin src="/coast-wards/assets/index-20e04600.js"></script>
-    <link rel="stylesheet" href="/coast-wards/assets/index-943f9b39.css">
+    <script type="module" crossorigin src="/coast-wards/assets/index-bc453ba7.js"></script>
+    <link rel="stylesheet" href="/coast-wards/assets/index-2b538e80.css">
   </head>
   <body>
     <div id="app">
       <div class="mapbox">
-        <div class="mapbox_actions" id="mapBoxAction">
+        <div id="mapBoxAction" class="mapbox_actions">
           <h1>¿Tienes fotos de costas?</h1>
-          <div class="mapbox_actions_block">
-            <div class="mapbox_actions_btns">
+          <div class="actions_block">
+            <div class="actions_btns">
               <a href="#" rel="noopener noreferrer" id="showShared">
                 <span class="material-icons material-symbols-outlined">
                   share
@@ -23,15 +23,16 @@
               </a>
               <p>Compártelo</p>
             </div>
-            <div class="mapbox_actions_btns">
+            <div class="actions_btns">
               <a href="#" rel="noopener noreferrer" id="useFormPhoto">
                 <span class="material-icons material-symbols-outlined">
                   add_a_photo
                 </span>
               </a>
               <p>Subir</p>
+              <input type="file" id="inputFile" accept="image/jpeg" style="display:none;">
             </div>
-            <div class="mapbox_actions_btns">
+            <div class="actions_btns">
               <a href="#" rel="noopener noreferrer" id="showMap">
                 <span class="material-icons material-symbols-outlined">
                   visibility
@@ -42,7 +43,7 @@
           </div>
           <a target="_blank" rel="noopener noreferrer" class="eepurl" href="http://eepurl.com/b1-BSH">Avísame cuando ...</a>
         </div>
-        <div class="mapbox_shared" id="mapBoxShared">
+        <div id="mapBoxShared" class="mapbox_shared">
           <div class="main_content">
             <div class="mapbox_shared_action">
               <a href="" rel="noopener noreferrer" id="closeShared">
@@ -57,8 +58,64 @@
             <p>¿Conoces a alguien que vive cerca de una costa?</p>
           </div>
         </div>
-        <div id="mapbox">
-        </div>
+        <form id="mapBoxForm" class="mapbox_form" action="">
+          <div class="mapbox_form_information">
+            <div class="mapbox_form_information_image" style="background: #f2f2f2;"></div>
+            <div class="mapbox_form_information_content">
+              <h2>¡Tu imagen está lista para subir! Solo una pregunta mas ...</h2>
+              <p><strong>How would you describe the coast material? </strong><a href="#" rel="noopener noreferrer">(What do you mean by coast material?)</a></p>
+              <div class="mapbox_form_information_content_options">
+                <div class="mapbox_form_information_content_type __sand" data-type="sand">
+                  <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
+                  Sand
+                </div>
+                <div class="mapbox_form_information_content_type __pebble" data-type="pebble">
+                  <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
+                  Pebble
+                </div>
+                <div class="mapbox_form_information_content_type __rock" data-type="rock">
+                  <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
+                  Rock
+                </div>
+                <div class="mapbox_form_information_content_type __mud" data-type="mud">
+                  <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
+                  Mud
+                </div>
+                <div class="mapbox_form_information_content_type __ice" data-type="ice">
+                  <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
+                  Ice
+                </div>
+                <div class="mapbox_form_information_content_type __made" data-type="made">
+                  <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
+                  Man-made
+                </div>
+                <div class="mapbox_form_information_content_type __not" data-type="notsure">
+                  <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
+                  No estoy seguro
+                </div>
+              </div>
+              <span>Dejanos un comentario!</span>
+              <textarea id="mapFormComment" name="comment" placeholder="Cuéntanos algo de esta costa..."></textarea>
+            </div>
+          </div>
+          <div class="mapbox_form_actions">
+            <div class="mapbox_form_actions_terms">
+              <input type="checkbox" id="checkTerms" name="checkTerms" value="terms">
+              <label for="checkTerms"> He leído y acepto los<a href="#" noopener noreferrer> términos</a></label>
+            </div>
+            <div class="mapbox_form_actions_btns">
+              <a href="#" class="btn btn__empty" rel="noopener noreferrer" id="closeForm">Cancel</a>
+              <a href="#" class="btn btn__blue" rel="noopener noreferrer" id="sendForm">Subir</a>
+            </div>
+          </div>
+          <div class="mapbox_form_inputs">
+            <input type="hidden" id="mapFormId" name="id" value="">
+            <input type="hidden" id="mapFormMaterial" name="material" value="sand">
+            <input type="hidden" id="mapFormLng" name="longitude" value="">
+            <input type="hidden" id="mapFormLt" name="latitude" value="">
+          </div>
+        </form>
+        <div id="mapbox"></div>
       </div>
     </div>
     
