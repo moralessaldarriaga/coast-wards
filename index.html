@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#0076b7" />
     <title>COASTWARDS</title>
-    <script type="module" crossorigin src="/coast-wards/assets/index-df90956f.js"></script>
-    <link rel="stylesheet" href="/coast-wards/assets/index-97a1c89d.css">
+    <script type="module" crossorigin src="/coast-wards/assets/index-5461376b.js"></script>
+    <link rel="stylesheet" href="/coast-wards/assets/index-343f2877.css">
   </head>
   <body>
     <div id="app">
@@ -62,34 +62,34 @@
           <div class="mapbox_form_information">
             <div class="mapbox_form_information_image" style="background: #f2f2f2;"></div>
             <div class="mapbox_form_information_content">
-              <h2 id="1">¡Tu imagen está lista para subir! Solo una pregunta mas ...</h2>
-              <p id="2"><strong>How would you describe the coast material? </strong><a href="#" rel="noopener noreferrer">(What do you mean by coast material?)</a></p>
+              <h2 id="1">¡Genial! Tu imágen está lista para subirse. Una preguntita más ...</h2>
+              <p id="2"><strong>¿Cómo describirías el material de costa? </strong><a href="#" rel="noopener noreferrer">(¿Qué quiere decir 'material de la costa'?)</a></p>
               <div id="mapboxGetType" class="mapbox_form_information_content_options">
-                <div class="mapbox_form_information_content_type __sand" data-type="arena">
+                <div class="mapbox_form_information_content_type __sand" data-type="arena" data-color="255, 196, 23">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
                   Arena
                 </div>
-                <div class="mapbox_form_information_content_type __pebble" data-type="piedrecitas">
+                <div class="mapbox_form_information_content_type __pebble" data-type="piedrecitas" data-color="190, 216, 57">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
                   Piedrecitas
                 </div>
-                <div class="mapbox_form_information_content_type __rock" data-type="roca">
+                <div class="mapbox_form_information_content_type __rock" data-type="roca" data-color="244, 110, 54">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
                   Roca
                 </div>
-                <div class="mapbox_form_information_content_type __mud" data-type="barro">
+                <div class="mapbox_form_information_content_type __mud" data-type="barro" data-color="187, 128, 239">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
                   Barro
                 </div>
-                <div class="mapbox_form_information_content_type __ice" data-type="hielo">
+                <div class="mapbox_form_information_content_type __ice" data-type="hielo" data-color="255, 153, 173">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
                   Hielo
                 </div>
-                <div class="mapbox_form_information_content_type __made" data-type="hecho por humanos">
+                <div class="mapbox_form_information_content_type __made" data-type="hecho por humanos" data-color="36, 173, 187">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
                   Hecho por humanos
                 </div>
-                <div class="mapbox_form_information_content_type __not" data-type="no estoy seguro">
+                <div class="mapbox_form_information_content_type __not" data-type="no estoy seguro" data-color="169, 169, 169">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
                   No estoy seguro
                 </div>
@@ -163,6 +163,7 @@
             <input type="hidden" id="mapFormMaterial" name="material" value="sand">
             <input type="hidden" id="mapFormLng" name="longitude" value="">
             <input type="hidden" id="mapFormLt" name="latitude" value="">
+            <input type="hidden" id="mapFormColor" name="color" value="">
           </div>
         </div>
         <div id="mapbox"></div>
