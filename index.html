@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#0076b7" />
     <title>COASTWARDS</title>
-    <script type="module" crossorigin src="/coast-wards/assets/index-5f8a1544.js"></script>
-    <link rel="stylesheet" href="/coast-wards/assets/index-2b538e80.css">
+    <script type="module" crossorigin src="/coast-wards/assets/index-df90956f.js"></script>
+    <link rel="stylesheet" href="/coast-wards/assets/index-97a1c89d.css">
   </head>
   <body>
     <div id="app">
@@ -58,44 +58,94 @@
             <p>¿Conoces a alguien que vive cerca de una costa?</p>
           </div>
         </div>
-        <form id="mapBoxForm" class="mapbox_form" action="">
+        <div id="mapBoxForm" class="mapbox_form">
           <div class="mapbox_form_information">
             <div class="mapbox_form_information_image" style="background: #f2f2f2;"></div>
             <div class="mapbox_form_information_content">
-              <h2>¡Tu imagen está lista para subir! Solo una pregunta mas ...</h2>
-              <p><strong>How would you describe the coast material? </strong><a href="#" rel="noopener noreferrer">(What do you mean by coast material?)</a></p>
-              <div class="mapbox_form_information_content_options">
-                <div class="mapbox_form_information_content_type __sand" data-type="sand">
+              <h2 id="1">¡Tu imagen está lista para subir! Solo una pregunta mas ...</h2>
+              <p id="2"><strong>How would you describe the coast material? </strong><a href="#" rel="noopener noreferrer">(What do you mean by coast material?)</a></p>
+              <div id="mapboxGetType" class="mapbox_form_information_content_options">
+                <div class="mapbox_form_information_content_type __sand" data-type="arena">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
-                  Sand
+                  Arena
                 </div>
-                <div class="mapbox_form_information_content_type __pebble" data-type="pebble">
+                <div class="mapbox_form_information_content_type __pebble" data-type="piedrecitas">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
-                  Pebble
+                  Piedrecitas
                 </div>
-                <div class="mapbox_form_information_content_type __rock" data-type="rock">
+                <div class="mapbox_form_information_content_type __rock" data-type="roca">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
-                  Rock
+                  Roca
                 </div>
-                <div class="mapbox_form_information_content_type __mud" data-type="mud">
+                <div class="mapbox_form_information_content_type __mud" data-type="barro">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
-                  Mud
+                  Barro
                 </div>
-                <div class="mapbox_form_information_content_type __ice" data-type="ice">
+                <div class="mapbox_form_information_content_type __ice" data-type="hielo">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
-                  Ice
+                  Hielo
                 </div>
-                <div class="mapbox_form_information_content_type __made" data-type="made">
+                <div class="mapbox_form_information_content_type __made" data-type="hecho por humanos">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
-                  Man-made
+                  Hecho por humanos
                 </div>
-                <div class="mapbox_form_information_content_type __not" data-type="notsure">
+                <div class="mapbox_form_information_content_type __not" data-type="no estoy seguro">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
                   No estoy seguro
                 </div>
               </div>
               <span>Dejanos un comentario!</span>
               <textarea id="mapFormComment" name="comment" placeholder="Cuéntanos algo de esta costa..."></textarea>
+              <div class="mapbox_form_information_collection">
+                <div class="mapbox_form_information_collection_question">
+                  <div id="openCollection" class="question">¿QUÉ OTRA INFORMACIÓN RECOPILAS?</div>
+                  <span class="material-icons material-symbols-outlined">navigate_next</span>
+                </div>
+                <div class="mapbox_form_information_collection_table">
+                  <table>
+                    <tr>
+                      <th>DIRECCIÓN IP</th>
+                      <th></th>
+                    </tr>
+                    <tr>
+                      <td>DIRECCIÓN IP</td>
+                      <td>We will save your IP Address upon upload <a href="#" rel="noopener noreferrer" target="_blank">WHY?</a></td>
+                    </tr>
+                    <tr>
+                      <th>IMAGEN</th>
+                      <th></th>
+                    </tr>
+                    <tr>
+                      <td>IMAGEN</td>
+                      <td>Guardamos la imagen con un ancho de 800 píxeles y eliminamos los metadatos</td>
+                    </tr>
+                    <tr>
+                      <td>Identificador único</td>
+                      <td>aefbdda0-be01-11ed-95c0-3be30f93ae48</td>
+                    </tr>
+                    <tr>
+                      <td>Latitud</td>
+                      <td>-12.073909700015227</td>
+                    </tr>
+                    <tr>
+                      <td>Longitud</td>
+                      <td>-12.073909700015227</td>
+                    </tr>
+                    <tr>
+                      <td>Localización manual</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Localización correcta</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Date/Time</td>
+                      <td>2023:03:07 08:24:08</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
           <div class="mapbox_form_actions">
@@ -114,7 +164,7 @@
             <input type="hidden" id="mapFormLng" name="longitude" value="">
             <input type="hidden" id="mapFormLt" name="latitude" value="">
           </div>
-        </form>
+        </div>
         <div id="mapbox"></div>
       </div>
     </div>
