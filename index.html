@@ -6,23 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#0076b7" />
     <title>COASTWARDS</title>
-    <script type="module" crossorigin src="/coast-wards/assets/index-5461376b.js"></script>
-    <link rel="stylesheet" href="/coast-wards/assets/index-343f2877.css">
+    <script type="module" crossorigin src="/coast-wards/assets/index-443c9a36.js"></script>
+    <link rel="stylesheet" href="/coast-wards/assets/index-f0da0574.css">
   </head>
   <body>
     <div id="app">
       <div class="mapbox">
         <div id="mapBoxAction" class="mapbox_actions">
+          <img class="mapbox_powerby" src="/coast-wards/assets/powerby_coastwards-bc8f779b.svg" alt="">
           <h1>¿Tienes fotos de costas?</h1>
           <div class="actions_block">
-            <div class="actions_btns">
+            <!-- <div class="actions_btns">
               <a href="#" rel="noopener noreferrer" id="showShared">
                 <span class="material-icons material-symbols-outlined">
                   share
                 </span>
               </a>
               <p>Compártelo</p>
-            </div>
+            </div> -->
             <div class="actions_btns">
               <a href="#" rel="noopener noreferrer" id="useFormPhoto">
                 <span class="material-icons material-symbols-outlined">
@@ -41,7 +42,7 @@
               <p>Ver mapa</p>
             </div>
           </div>
-          <a target="_blank" rel="noopener noreferrer" class="eepurl" href="http://eepurl.com/b1-BSH">Avísame cuando ...</a>
+          <!-- <a target="_blank" rel="noopener noreferrer" class="eepurl" href="http://eepurl.com/b1-BSH">Avísame cuando ...</a> -->
         </div>
         <div id="mapBoxShared" class="mapbox_shared">
           <div class="main_content">
@@ -62,8 +63,8 @@
           <div class="mapbox_form_information">
             <div class="mapbox_form_information_image" style="background: #f2f2f2;"></div>
             <div class="mapbox_form_information_content">
-              <h2 id="1">¡Genial! Tu imágen está lista para subirse. Una preguntita más ...</h2>
-              <p id="2"><strong>¿Cómo describirías el material de costa? </strong><a href="#" rel="noopener noreferrer">(¿Qué quiere decir 'material de la costa'?)</a></p>
+              <h2>¡Genial! Tu imágen está lista para subirse. Una preguntita más ...</h2>
+              <!-- <p><strong>¿Cómo describirías el material de costa? </strong><a href="#" rel="noopener noreferrer">(¿Qué quiere decir 'material de la costa'?)</a></p> -->
               <div id="mapboxGetType" class="mapbox_form_information_content_options">
                 <div class="mapbox_form_information_content_type __sand" data-type="arena" data-color="255, 196, 23">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
@@ -96,7 +97,7 @@
               </div>
               <span>Dejanos un comentario!</span>
               <textarea id="mapFormComment" name="comment" placeholder="Cuéntanos algo de esta costa..."></textarea>
-              <div class="mapbox_form_information_collection">
+              <!-- <div class="mapbox_form_information_collection">
                 <div class="mapbox_form_information_collection_question">
                   <div id="openCollection" class="question">¿QUÉ OTRA INFORMACIÓN RECOPILAS?</div>
                   <span class="material-icons material-symbols-outlined">navigate_next</span>
@@ -145,7 +146,7 @@
                     </tr>
                   </table>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="mapbox_form_actions">
@@ -165,6 +166,17 @@
             <input type="hidden" id="mapFormLt" name="latitude" value="">
             <input type="hidden" id="mapFormColor" name="color" value="">
           </div>
+        </div>
+        <div id="mapBoxCoordinates" class="mapbox_coordinates">
+            <div class="mapbox_coordinates_block">
+                <h2>No podemos encontrar la localización de tu imagen.
+                  ¿Recuerdas exactamente dondé sacaste esta foto? 
+                </h2>
+                <div class="mapbox_coordinates_actions">
+                  <a href="#" id="mapBoxSearchCoordinate" rel="noopener noreferrer">Sí, lo recuerdo</a>
+                  <a href="#" id="mapBoxReturnHome" rel="noopener noreferrer">No, no me acuerdo</a>
+                </div>
+            </div>
         </div>
         <div id="mapbox"></div>
       </div>
