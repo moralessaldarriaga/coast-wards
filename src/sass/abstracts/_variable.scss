@@ -3,7 +3,7 @@
 
 :root{
     --color-white: #fff;
-    --color-black: #000;
+    --color-black: #3e3e3e;
     --main-color: #0076b7;
     --font-roboto: 'Roboto', sans-serif;
     --font-roboto-slab: 'Roboto Slab', serif;
@@ -14,7 +14,7 @@
     font-weight: 300;
     font-size: var(--font-size-main);
   
-    color-scheme: light dark;
+    // color-scheme: light dark;
     color: var(--color-white);
 
     font-synthesis: none;

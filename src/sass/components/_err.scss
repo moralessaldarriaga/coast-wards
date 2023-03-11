@@ -1,0 +1,11 @@
+.err_block{
+    width: min(100%, 450px);
+    display: flex;
+    place-content: center;
+    place-items: center;
+    
+    h2{
+        font-weight: 400;
+        text-align: center;
+    }
+}

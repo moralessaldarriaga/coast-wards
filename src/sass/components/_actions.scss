@@ -1,0 +1,33 @@
+.actions{
+    &_block{
+        margin: 2.5rem 0 0 0;
+        display: flex;
+        gap: 30px;
+        place-content: center;
+        place-items: center;
+        text-transform: uppercase;
+    }
+
+    &_btns{
+        display: flex;
+        flex-direction: column;
+        place-content: center;
+        place-items: center;
+        gap: 10px;
+        
+        a{
+            display: flex;
+            place-content: center;
+            place-items: center;
+            width: 66px;
+            height: 66px;
+            background: var(--main-color);
+            border-radius: 50%;
+            box-shadow: 0 1px 1.5px 0 rgb(0 0 0 / 12%), 0 1px 1px 0 rgb(0 0 0 / 24%);
+
+            span{
+                color: var(--color-white);
+            }
+        }
+    }
+}
