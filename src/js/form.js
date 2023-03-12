@@ -9,6 +9,7 @@ const getsData = (idGet, markerGet) => {
     marker = markerGet;
 } 
 
+
 // AQUÍ SE ENVIA LA DATA DESDE UN FETCH POST
 document.getElementById('sendForm').addEventListener('click', (e) => {
     e.preventDefault();
@@ -24,21 +25,10 @@ export const formApplication = (data, marker) => {
     // AQUÍ ENVIAMOS LOS DATOS DEL FORMULARIO AL POST
     getsData(id, marker);
 
-    // ESTE FUNCTION ES PARA AGREGAR LOS DATOS 
-    document.getElementById('setFormMap').addEventListener('click', (e) => {
-        e.preventDefault();
-
-        // MOSTRAMOS EL FORMULARIO, MOSTRAMOS LA IMAGEN Y ELIMINAMOS EL CONTENEDOR CON LOS BOTONES DE ACCION
-        document.getElementById('mapBoxForm').classList.add('show');
-        document.querySelector('.mapboxgl_snackbar').remove();
-        document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ data.marked.properties.image +')';
-
-        //AGREGO LOS VALORES A LOS INPUTS 
-        document.getElementById('mapFormId').value = data.id;
-        document.getElementById('mapFormLng').value = data.image.longuitud;
-        document.getElementById('mapFormLt').value = data.image.latitude;
-
-    });
+    //AGREGO LOS VALORES A LOS INPUTS 
+    document.getElementById('mapFormId').value = data.id;
+    document.getElementById('mapFormLng').value = data.image.longuitud;
+    document.getElementById('mapFormLt').value = data.image.latitude;
 
     // AQUÍ SE PUEDE ESCOGER EL DATA TYPE CON VALORES DE LAS OPCIONES MATERIAL
     const parentContentType = document.getElementById('mapBoxGetType');
@@ -159,13 +149,14 @@ export const formDraggable = (id, marker, file) => {
         document.getElementById("mapFormComment").value = "";
         document.getElementById('checkTerms').checked = false;
 
-
         const parentContentType = document.getElementById('mapBoxGetType');
-        const childContentType = parentContentType.querySelectorAll('*');
+        const childContentType = parentContentType.querySelectorAll('div');
 
         childContentType.forEach(function(childContentType) {
+            childContentType.querySelector('span').innerHTML = 'radio_button_unchecked';
             childContentType.classList.remove('active');
         });
+        
 
         useCloseForm(marker);
 

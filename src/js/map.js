@@ -23,35 +23,6 @@ export const useMapBox = () => {
       zoom: 5, //5,
       logoPosition: 'bottom-right'
     });
-    
-
-    // map.on('styleimagemissing', (e) => {
-    //   const id = e.id; // id of the missing image
-       
-    //   // Check if this missing icon is
-    //   // one this function can generate.
-    //   const prefix = 'square-rgb-';
-    //   if (!id.includes(prefix)) return;
-       
-    //   // Get the color from the id.
-    //   const rgb = id.replace(prefix, '').split(',').map(Number);
-       
-    //   const width = 20; // The image will be 64 pixels square.
-    //   const bytesPerPixel = 4; // Each pixel is represented by 4 bytes: red, green, blue, and alpha.
-    //   const data = new Uint8Array(width * width * bytesPerPixel);
-       
-    //   for (let x = 0; x < width; x++) {
-    //     for (let y = 0; y < width; y++) {
-    //       const offset = (y * width + x) * bytesPerPixel;
-    //       data[offset + 0] = rgb[0]; // red
-    //       data[offset + 1] = rgb[1]; // green
-    //       data[offset + 2] = rgb[2]; // blue
-    //       data[offset + 3] = 255; // alpha
-    //     }
-    //   }
-       
-    //   map.addImage(id, { width: width, height: width, data: data });
-    // });
 
     map.on("load", () => {
       map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
@@ -175,8 +146,7 @@ export const useMapBox = () => {
       inputFile.click();
     };
 
-    //create element 'legend information' after load mapbox
-
+    //CREAMOS EL CONTENEDOR DE LEYENDA INFORMATIVA
     const elementLegendInfo = document.createElement('div');
     elementLegendInfo.className = 'mapboxgl_legend';
 

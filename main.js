@@ -30,8 +30,6 @@ const closeTerms = () => {
     });
 }
 
-// CODIGO COMPARTIR
-
 // const showShared = () => {
 //     const showViewShared = document.getElementById('showShared');
 //     showViewShared.addEventListener('click', (e) => {
@@ -106,3 +104,8 @@ openInputFile();
 setImagePost();
 returnHome();
 useMapBox();
+
+window.addEventListener("load", function() {
+    const loader = document.querySelector('.loading');
+    loader.style.display = 'none';
+});

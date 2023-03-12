@@ -62,10 +62,6 @@ export const usePostForm = (id, marker) => {
         });
 
         let map = useMapBox();
-
-        // map.on('load', () => {
-
-        marker.remove();
         
         map.flyTo({
             center: [-99.1332, 19.4326],
@@ -73,8 +69,7 @@ export const usePostForm = (id, marker) => {
             speed: 5,
             curve: 1,
             essential: true
-        });
-        // });        
+        });        
 
     })
     .catch(error => {

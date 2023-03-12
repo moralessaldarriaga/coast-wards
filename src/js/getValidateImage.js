@@ -2,7 +2,6 @@ import mapboxgl from 'mapbox-gl';
 import { useMapBox } from './map';
 import { formApplication, formDraggable } from './form';
 import imageIcoMarket from '../images/ico_marker.svg';
-import imageDemo from '../images/image_sample.jpg';
 
 export const getValidationImage = async(formData, loader, file) => {
     try {
@@ -56,7 +55,8 @@ export const getValidationImage = async(formData, loader, file) => {
 
                 //SE CREA EL CONTENEDOR CON LOS BOTONES DE ACCIONES 
                 const elementBtns = document.createElement('div');
-                elementBtns.className = 'mapboxgl_snackbar';
+                elementBtns.className = 'mapboxgl_snackbar mapboxgl_snackbar__response';
+                elementBtns.id = 'mapboxglFirstActions';
                 elementBtns.innerHTML = '<p>¿La ubicación se ve bien?</p>' +
                 '<div class="mapboxgl_snackbar_actions">' +
                     '<a href="#" rel="noopener noreferrer" id="setZoomMap" class="btn btn__border">No</a>' +
@@ -65,13 +65,32 @@ export const getValidationImage = async(formData, loader, file) => {
 
                 map.getContainer().appendChild(elementBtns);
 
+                let newMarker;
+
                 // HACEMOS CLICK EN EL BOTON PARA REALIZAR EN EVENTO DE DRAG EN EL MAPA
                 const setZoomMap = document.getElementById('setZoomMap');
                 setZoomMap.addEventListener('click', function(e) {
                     e.preventDefault();
 
-                     // DESDE AQUÍ PODEMOS CREAR EL MARKER E INTERACTURAR CON EL DRAG
-                     const el = document.createElement('div');
+                    marker.remove();
+
+                    const snackBarFirstActions = document.getElementById('mapboxglFirstActions');
+                    snackBarFirstActions.parentNode.removeChild(snackBarFirstActions);
+
+                    // CREAMOS EL NUEVO BLOQUE CON BOTONES DE ACCIONES
+                    const elementNewBtns = document.createElement('div');
+                    elementNewBtns.className = 'mapboxgl_snackbar mapboxgl_snackbar__edit';
+                    elementNewBtns.id = 'mapboxglNewActions';
+                    elementNewBtns.innerHTML = '<p>¡Haz zoom hasta que el marcador se vuelva verde y apunte a la ubicación en la que tomaste esta foto!</p>' +
+                    '<div class="mapboxgl_snackbar_actions">' +
+                        '<a href="#" rel="noopener noreferrer" id="setReturnHome" class="btn btn__border">Cancelar</a>' +
+                        '<a href="#" rel="noopener noreferrer" id="setNewFormMap" class="btn btn__blue">Coloca la imagen</a>' +
+                    '</div>';
+
+                    map.getContainer().appendChild(elementNewBtns);
+
+                    // DESDE AQUÍ PODEMOS CREAR EL MARKER E INTERACTURAR CON EL DRAG
+                    const el = document.createElement('div');
 
                      // CARGAMOS LA IMAGEN DEL FILE 
                      const readerFile = new FileReader();
@@ -83,49 +102,76 @@ export const getValidationImage = async(formData, loader, file) => {
                      el.style.width = '200px';
                      el.style.height = '200px';
                      
-                     const marker = new mapboxgl.Marker({
+                     newMarker = new mapboxgl.Marker({
                          element: el
                      })
                      .setLngLat(map.getCenter())
                      .addTo(map);
 
-                     marker.getElement().classList.add('mapboxgl_image');
+                     newMarker.getElement().classList.add('mapboxgl_image');
                      
                      // marker.setDraggable(true);
  
                      const onDragEnd = () => {
-                         const lngLat = marker.getLngLat();
-                         marker.setLngLat(map.getCenter());
+                         const lngLat = newMarker.getLngLat();
+                         newMarker.setLngLat(map.getCenter());
                          document.getElementById('mapFormLng').value = lngLat.lng;
                          document.getElementById('mapFormLt').value = lngLat.lat;
+
+                         console.log(lngLat.lng + ' ' + lngLat.lat);
                      }
+
+                     const zoomValid = () => {
+                        // Obtener el nivel de zoom actual
+                        const zoom = map.getZoom();
+    
+                        // Verificar si el nivel de zoom está dentro del rango especificado
+                        if (zoom > 14) {
+                            newMarker.getElement().querySelector('.mapboxgl_image_light').style.background = '#03C988';
+                            newMarker.getElement().querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#03C988 transparent transparent transparent';
+                            document.getElementById('setFormMap').style.pointerEvents = 'initial';
+                            document.getElementById('setFormMap').style.opacity = '1';
+                        } else {    
+                            newMarker.getElement().querySelector('.mapboxgl_image_light').style.background = '#EB455F';
+                            newMarker.getElement().querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#EB455F transparent transparent transparent';
+                           
+                            const setSearchMapFind = document.getElementById('setFormMap');
+                            if (setSearchMapFind) {
+                                setSearchMapFind.style.pointerEvents = 'none';
+                                setSearchMapFind.style.opacity = '.5';
+                            }
+                        }
+                    }
 
                      map.on('drag', onDragEnd);
 
                      map.on('zoom', onDragEnd);
      
-                     map.on('zoomend', function() {
-                         // Obtener el nivel de zoom actual
-                         const zoom = map.getZoom();
-     
-                         // Verificar si el nivel de zoom está dentro del rango especificado
-                         if (zoom < 14) {
-                             document.querySelector('.mapboxgl_image_light').style.background = '#EB455F';
-                             document.querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#EB455F transparent transparent transparent';
-                             document.getElementById('setSearchMap').style.pointerEvents = 'none';
-                             document.getElementById('setSearchMap').style.opacity = '.5';
-                         } else {
-                             document.querySelector('.mapboxgl_image_light').style.background = '#03C988';
-                             document.querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#03C988 transparent transparent transparent';
-                             document.getElementById('setSearchMap').style.pointerEvents = 'initial';
-                             document.getElementById('setSearchMap').style.opacity = '1';
-                         }
-                     });
+                     map.on('zoomend', zoomValid);
+
+
+                    document.getElementById('setNewFormMap').addEventListener('click', () => {
+                        // MOSTRAMOS EL FORMULARIO, MOSTRAMOS LA IMAGEN Y ELIMINAMOS EL CONTENEDOR CON LOS BOTONES DE ACCION
+                        document.getElementById('mapBoxForm').classList.add('show');
+                        document.querySelector('.mapboxgl_snackbar').remove();
+                        document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ data.marked.properties.image +')';
+                    
+                    formApplication(data, newMarker);
+                    });
                 });
 
 
                 // PASAMOS LOS DATOS A LOS PARAMETROS DEL FUNCTION
-                formApplication(data, marker);
+                const setSearchMap = document.getElementById('setFormMap');
+                setSearchMap.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // MOSTRAMOS EL FORMULARIO, MOSTRAMOS LA IMAGEN Y ELIMINAMOS EL CONTENEDOR CON LOS BOTONES DE ACCION
+                    document.getElementById('mapBoxForm').classList.add('show');
+                    document.querySelector('.mapboxgl_snackbar').remove();
+                    document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ data.marked.properties.image +')';
+                    
+                    formApplication(data, marker);
+                });
 
             });
             
@@ -175,7 +221,7 @@ export const getValidationImage = async(formData, loader, file) => {
 
                             //CREAMOS EL CONTENEDOR CON LOS BOTONES A EJECUTAR 
                             elementBtnsSearch = document.createElement('div');
-                            elementBtnsSearch.className = 'mapboxgl_snackbar';
+                            elementBtnsSearch.className = 'mapboxgl_snackbar mapbox_gl_snackbar_locating';
                             elementBtnsSearch.innerHTML = '<p>¡Haz zoom hasta que el marcador se vuelva verde y apunte a la ubicación en la que tomaste esta foto!</p>' +
                             '<div class="mapboxgl_snackbar_actions">' +
                                 '<a href="#" rel="noopener noreferrer" id="setReturnHome" class="btn btn__border">Cancelar subida</a>' +
@@ -215,32 +261,52 @@ export const getValidationImage = async(formData, loader, file) => {
                             document.getElementById('mapFormLt').value = lngLat.lat;
                         }
 
-                        map.on('drag', onDragEnd);
-
-                        map.on('zoom', onDragEnd);
-        
-                        map.on('zoomend', function() {
+                        const zoomValidate = () => {
                             // Obtener el nivel de zoom actual
                             const zoom = map.getZoom();
         
                             // Verificar si el nivel de zoom está dentro del rango especificado
-                            if (zoom < 14) {
-                                document.querySelector('.mapboxgl_image_light').style.background = '#EB455F';
-                                document.querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#EB455F transparent transparent transparent';
-                                document.getElementById('setSearchMap').style.pointerEvents = 'none';
-                                document.getElementById('setSearchMap').style.opacity = '.5';
-                            } else {
-                                document.querySelector('.mapboxgl_image_light').style.background = '#03C988';
-                                document.querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#03C988 transparent transparent transparent';
+                            if (zoom > 14) {
+                                marker.getElement().querySelector('.mapboxgl_image_light').style.background = '#03C988';
+                                marker.getElement().querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#03C988 transparent transparent transparent';
                                 document.getElementById('setSearchMap').style.pointerEvents = 'initial';
                                 document.getElementById('setSearchMap').style.opacity = '1';
+                            } else {    
+                                marker.getElement().querySelector('.mapboxgl_image_light').style.background = '#EB455F';
+                                marker.getElement().querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#EB455F transparent transparent transparent';
+                               
+                                const setSearchMapFind = document.getElementById('setSearchMap');
+                                if (setSearchMapFind) {
+                                    setSearchMapFind.style.pointerEvents = 'none';
+                                    setSearchMapFind.style.opacity = '.5';
+                                }
                             }
-                        });
+                        }
+
+                        map.on('drag', onDragEnd);
+
+                        map.on('zoom', onDragEnd);
+        
+                        map.on('zoomend', zoomValidate);
+
 
                         // RETORNAR A LA VIEW HOME
                         const setReturnHome = document.getElementById('setReturnHome');
                         setReturnHome.addEventListener('click', function(e) {
                             e.preventDefault();
+
+                            const snackBar = document.querySelector('.mapboxgl_snackbar');
+                            if (snackBar) {
+                                snackBar.parentNode.removeChild(snackBar);
+                            }
+
+                            const errBlock = document.getElementById('mapBoxAction').querySelector('.err_block');
+                            if (errBlock) {
+                                errBlock.remove();
+                            }
+
+                            document.getElementById('mapBoxAction').classList.remove('hidden');
+                            document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
 
                             marker.remove();
 
@@ -251,18 +317,21 @@ export const getValidationImage = async(formData, loader, file) => {
                                 curve: 1,
                                 essential: true
                             });
-                            
-                            document.querySelector('.mapboxgl_snackbar').remove();
-                            document.getElementById('mapBoxAction').classList.remove('hidden');
-                            document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
-                            document.getElementById('mapBoxAction').querySelector('.err_block').remove();
 
                         });
+
 
                         // AQUÍ DEBEMOS CARGAR EL MAPA CON EL MARKER DRAGGABLE PARA MANDAR LOS DATOS AL FORMULARIO
                         const setSearchMap = document.getElementById('setSearchMap');
                         setSearchMap.addEventListener('click', function(e) {
                             e.preventDefault();
+
+                            marker.remove();
+
+                            const snackBar = document.querySelector('.mapboxgl_snackbar');
+                            if (snackBar) {
+                                snackBar.parentNode.removeChild(snackBar);
+                            }
                             
                             document.getElementById('mapBoxForm').classList.add('show');
 

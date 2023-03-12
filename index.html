@@ -6,9 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#0076b7" />
     <title>COASTWARDS</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swaps" rel="stylesheet" />
   </head>
   <body>
     <div id="app">
+      <div class="loading">
+        <div class="main_content">
+            <div class="loading_block">
+              <img src="/src/images/coastwards.svg" alt="coast_wards_logo" width="450" height="250">
+            </div>
+        </div>
+      </div>
       <div class="mapbox">
         <div id="mapBoxAction" class="mapbox_actions">
           <img class="mapbox_powerby" src="/src/images/powerby_coastwards.svg" alt="">
@@ -165,7 +173,7 @@
             <input type="hidden" id="mapFormColor" name="color" value="">
           </div>
         </div>
-        <div id="mapBoxCoordinates" class="mapbox_coordinates">
+        <div id="mapBoxCoordinates" class="mapbox_coordinates mapbobx_section">
             <div class="mapbox_coordinates_block">
                 <h2>No podemos encontrar la localización de tu imagen.
                   ¿Recuerdas exactamente dondé sacaste esta foto? 
