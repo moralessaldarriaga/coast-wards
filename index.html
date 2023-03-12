@@ -6,10 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#0076b7" />
     <title>COASTWARDS</title>
-    <script type="module" crossorigin src="/coast-wards/assets/index-757acb06.js"></script>
-    <link rel="stylesheet" href="/coast-wards/assets/index-7fac9844.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swaps" rel="stylesheet" />
+    <script type="module" crossorigin src="/coast-wards/assets/index-ecbbaefc.js"></script>
+    <link rel="stylesheet" href="/coast-wards/assets/index-991c87cb.css">
   </head>
   <body>
+    <div id="loading" class="loading">
+      <div class="main_content">
+          <div class="loading_block">
+            <img src="/coast-wards/assets/coastwards-ac9a683e.svg" alt="coast_wards_logo" width="450" height="250">
+            <div class="loader">
+              <span class="loader_pulse loader_pulse__white"></span>
+            </div>
+          </div>
+      </div>
+    </div>
     <div id="app">
       <div class="mapbox">
         <div id="mapBoxAction" class="mapbox_actions">
@@ -167,7 +178,7 @@
             <input type="hidden" id="mapFormColor" name="color" value="">
           </div>
         </div>
-        <div id="mapBoxCoordinates" class="mapbox_coordinates">
+        <div id="mapBoxCoordinates" class="mapbox_coordinates mapbobx_section">
             <div class="mapbox_coordinates_block">
                 <h2>No podemos encontrar la localización de tu imagen.
                   ¿Recuerdas exactamente dondé sacaste esta foto? 
