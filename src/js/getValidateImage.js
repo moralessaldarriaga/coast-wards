@@ -19,6 +19,7 @@ export const getValidationImage = async(formData, loader, file) => {
 
             const data = await response.json();
 
+
             // AQUÍ MANEJAMOS EVENTOS CON LA RESP DEL SERVIDOR
             loader.classList.remove('show');
             document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
@@ -83,7 +84,7 @@ export const getValidationImage = async(formData, loader, file) => {
                     elementNewBtns.id = 'mapboxglNewActions';
                     elementNewBtns.innerHTML = '<p>¡Haz zoom hasta que el marcador se vuelva verde y apunte a la ubicación en la que tomaste esta foto!</p>' +
                     '<div class="mapboxgl_snackbar_actions">' +
-                        '<a href="#" rel="noopener noreferrer" id="setReturnHome" class="btn btn__border">Cancelar</a>' +
+                        '<a href="#" rel="noopener noreferrer" id="setNewReturnHome" class="btn btn__border">Cancelar</a>' +
                         '<a href="#" rel="noopener noreferrer" id="setNewFormMap" class="btn btn__blue">Coloca la imagen</a>' +
                     '</div>';
 
@@ -112,13 +113,11 @@ export const getValidationImage = async(formData, loader, file) => {
                      
                      // marker.setDraggable(true);
  
-                     const onDragEnd = () => {
+                    const onDragEnd = () => {
                          const lngLat = newMarker.getLngLat();
                          newMarker.setLngLat(map.getCenter());
                          document.getElementById('mapFormLng').value = lngLat.lng;
                          document.getElementById('mapFormLt').value = lngLat.lat;
-
-                         console.log(lngLat.lng + ' ' + lngLat.lat);
                      }
 
                      const zoomValid = () => {
@@ -129,13 +128,13 @@ export const getValidationImage = async(formData, loader, file) => {
                         if (zoom > 14) {
                             newMarker.getElement().querySelector('.mapboxgl_image_light').style.background = '#03C988';
                             newMarker.getElement().querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#03C988 transparent transparent transparent';
-                            document.getElementById('setFormMap').style.pointerEvents = 'initial';
-                            document.getElementById('setFormMap').style.opacity = '1';
+                            document.getElementById('setNewFormMap').style.pointerEvents = 'initial';
+                            document.getElementById('setNewFormMap').style.opacity = '1';
                         } else {    
                             newMarker.getElement().querySelector('.mapboxgl_image_light').style.background = '#EB455F';
                             newMarker.getElement().querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#EB455F transparent transparent transparent';
                            
-                            const setSearchMapFind = document.getElementById('setFormMap');
+                            const setSearchMapFind = document.getElementById('setNewFormMap');
                             if (setSearchMapFind) {
                                 setSearchMapFind.style.pointerEvents = 'none';
                                 setSearchMapFind.style.opacity = '.5';
@@ -155,8 +154,38 @@ export const getValidationImage = async(formData, loader, file) => {
                         document.getElementById('mapBoxForm').classList.add('show');
                         document.querySelector('.mapboxgl_snackbar').remove();
                         document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ data.marked.properties.image +')';
-                    
-                    formApplication(data, newMarker);
+
+                        formApplication(data, newMarker, 0);
+                    });
+
+                    // RETORNAR A LA VIEW HOME
+                    const setNewReturnHome = document.getElementById('setNewReturnHome');
+                    setNewReturnHome.addEventListener('click', function(e) {
+                        e.preventDefault();
+
+                        const snackBar = document.querySelector('.mapboxgl_snackbar');
+                        if (snackBar) {
+                            snackBar.parentNode.removeChild(snackBar);
+                        }
+
+                        const errBlock = document.getElementById('mapBoxAction').querySelector('.err_block');
+                        if (errBlock) {
+                            errBlock.remove();
+                        }
+
+                        document.getElementById('mapBoxAction').classList.remove('hidden');
+                        document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
+
+                        newMarker.remove();
+
+                        map.flyTo({
+                            center: [-99.1332, 19.4326],
+                            zoom: 5, //5,
+                            speed: 1.5,
+                            curve: 1,
+                            essential: true
+                        });
+
                     });
                 });
 
@@ -202,159 +231,210 @@ export const getValidationImage = async(formData, loader, file) => {
                 viewSearchCoordinate.classList.add('show');
                 document.getElementById('mapBoxAction').classList.add('hidden');
 
-                // AQUÍ SE CARGA EL MARKER PARA ESCOGER TU UBICACION EN EL MAPA
-                document.getElementById('mapBoxSearchCoordinate').addEventListener('click', (e) => {
-                   
-                    e.preventDefault();
+                // AQUÍ SE CARGA EL MARKER PARA ESCOGER TU UBICACION EN EL MAPA Y SEGUIR CON EL FLUJO
+                
+                let handleSetCoordinatesClickRegister = false;
 
-                    document.getElementById('mapBoxCoordinates').classList.remove('show');
+                const mapBoxSearchCoordinate = document.getElementById('mapBoxSearchCoordinate');
 
-                    let map = useMapBox();
+                const handleSetCoordinatesClick = (e) => {
 
-                    map.on('load', () => {
-                        document.querySelector('.mapboxgl_legend').style.display = 'none';
-                        document.querySelector('.mapboxgl_file').style.display = 'none';
+                    if (!handleSetCoordinatesClickRegister) {
+                        console.log('hicis click al padre');
 
-                        let elementBtnsSearch = document.querySelector('.mapboxgl_snackbar');
+                        handleSetCoordinatesClickRegister = true;
 
-                        if(!elementBtnsSearch) {
+                        e.preventDefault();
 
-                            //CREAMOS EL CONTENEDOR CON LOS BOTONES A EJECUTAR 
-                            elementBtnsSearch = document.createElement('div');
-                            elementBtnsSearch.className = 'mapboxgl_snackbar mapbox_gl_snackbar_locating';
-                            elementBtnsSearch.innerHTML = '<p>¡Haz zoom hasta que el marcador se vuelva verde y apunte a la ubicación en la que tomaste esta foto!</p>' +
-                            '<div class="mapboxgl_snackbar_actions">' +
-                                '<a href="#" rel="noopener noreferrer" id="setReturnHome" class="btn btn__border">Cancelar subida</a>' +
-                                '<a href="#" rel="noopener noreferrer" id="setSearchMap" class="btn btn__blue" style="pointer-events: none; opacity: 0.5;">Coloca la imagen</a>' +
-                            '</div>';
-                        
-                            map.getContainer().appendChild(elementBtnsSearch);
-                        }
+                        document.getElementById('mapBoxCoordinates').classList.remove('show');
 
-                        // DESDE AQUÍ PODEMOS CREAR EL MARKER E INTERACTURAR CON EL DRAG
-                        const el = document.createElement('div');
+                        let map = useMapBox();
 
-                        // CARGAMOS LA IMAGEN DEL FILE 
-                        const readerFile = new FileReader();
-                        readerFile.readAsDataURL(file);
-                        readerFile.onloadend = function () {
-                            const base64Reader = readerFile.result;
-                            el.innerHTML = '<div class="mapboxgl_image_bg" style="background-image: url(' + base64Reader + ');"></div><div class="mapboxgl_image_light"></div><div class="mapboxgl_image_tool"><div class="mapboxgl_image_tool_tip"></div></div>';
-                        }
-                        el.style.width = '200px';
-                        el.style.height = '200px';
-                        
-                        const marker = new mapboxgl.Marker({
-                            element: el
-                        })
-                        .setLngLat(map.getCenter())
-                        .addTo(map);
+                        map.on('load', () => {
+                            document.querySelector('.mapboxgl_legend').style.display = 'none';
+                            document.querySelector('.mapboxgl_file').style.display = 'none';
 
-                        marker.getElement().classList.add('mapboxgl_image');
-                        
-                        // marker.setDraggable(true);
-    
-                        const onDragEnd = () => {
-                            const lngLat = marker.getLngLat();
-                            marker.setLngLat(map.getCenter());
-                            document.getElementById('mapFormLng').value = lngLat.lng;
-                            document.getElementById('mapFormLt').value = lngLat.lat;
-                        }
+                            let elementBtnsSearch = document.querySelector('.mapboxgl_snackbar');
 
-                        const zoomValidate = () => {
-                            // Obtener el nivel de zoom actual
-                            const zoom = map.getZoom();
+                            if(!elementBtnsSearch) {
+
+                                //CREAMOS EL CONTENEDOR CON LOS BOTONES A EJECUTAR 
+                                elementBtnsSearch = document.createElement('div');
+                                elementBtnsSearch.className = 'mapboxgl_snackbar mapbox_gl_snackbar_locating';
+                                elementBtnsSearch.innerHTML = '<p>¡Haz zoom hasta que el marcador se vuelva verde y apunte a la ubicación en la que tomaste esta foto!</p>' +
+                                '<div class="mapboxgl_snackbar_actions">' +
+                                    '<a href="#" rel="noopener noreferrer" id="setReturnHome" class="btn btn__border">Cancelar subida</a>' +
+                                    '<a href="#" rel="noopener noreferrer" id="setSearchMap" class="btn btn__blue" style="pointer-events: none; opacity: 0.5;">Coloca la imagen</a>' +
+                                '</div>';
+                            
+                                map.getContainer().appendChild(elementBtnsSearch);
+                            }
+
+                            // DESDE AQUÍ PODEMOS CREAR EL MARKER E INTERACTURAR CON EL DRAG
+                            const el = document.createElement('div');
+
+                            // CARGAMOS LA IMAGEN DEL FILE 
+                            const readerFile = new FileReader();
+                            readerFile.readAsDataURL(file);
+                            readerFile.onloadend = function () {
+                                const base64Reader = readerFile.result;
+                                el.innerHTML = '<div class="mapboxgl_image_bg" style="background-image: url(' + base64Reader + ');"></div><div class="mapboxgl_image_light"></div><div class="mapboxgl_image_tool"><div class="mapboxgl_image_tool_tip"></div></div>';
+                            }
+                            el.style.width = '200px';
+                            el.style.height = '200px';
+                            
+                            const marker = new mapboxgl.Marker({
+                                element: el
+                            })
+                            .setLngLat(map.getCenter())
+                            .addTo(map);
+
+                            marker.getElement().classList.add('mapboxgl_image');
+                            
+                            // marker.setDraggable(true);
         
-                            // Verificar si el nivel de zoom está dentro del rango especificado
-                            if (zoom > 14) {
-                                marker.getElement().querySelector('.mapboxgl_image_light').style.background = '#03C988';
-                                marker.getElement().querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#03C988 transparent transparent transparent';
-                                document.getElementById('setSearchMap').style.pointerEvents = 'initial';
-                                document.getElementById('setSearchMap').style.opacity = '1';
-                            } else {    
-                                marker.getElement().querySelector('.mapboxgl_image_light').style.background = '#EB455F';
-                                marker.getElement().querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#EB455F transparent transparent transparent';
-                               
-                                const setSearchMapFind = document.getElementById('setSearchMap');
-                                if (setSearchMapFind) {
-                                    setSearchMapFind.style.pointerEvents = 'none';
-                                    setSearchMapFind.style.opacity = '.5';
+                            const onDragEnd = () => {
+                                const lngLat = marker.getLngLat();
+                                marker.setLngLat(map.getCenter());
+                                document.getElementById('mapFormLng').value = lngLat.lng;
+                                document.getElementById('mapFormLt').value = lngLat.lat;
+                            }
+
+                            const zoomValidate = () => {
+                                // Obtener el nivel de zoom actual
+                                const zoom = map.getZoom();
+            
+                                // Verificar si el nivel de zoom está dentro del rango especificado
+                                if (zoom > 14) {
+                                    marker.getElement().querySelector('.mapboxgl_image_light').style.background = '#03C988';
+                                    marker.getElement().querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#03C988 transparent transparent transparent';
+                                    document.getElementById('setSearchMap').style.pointerEvents = 'initial';
+                                    document.getElementById('setSearchMap').style.opacity = '1';
+                                } else {    
+                                    marker.getElement().querySelector('.mapboxgl_image_light').style.background = '#EB455F';
+                                    marker.getElement().querySelector('.mapboxgl_image_tool_tip').style.borderColor = '#EB455F transparent transparent transparent';
+                                
+                                    const setSearchMapFind = document.getElementById('setSearchMap');
+                                    if (setSearchMapFind) {
+                                        setSearchMapFind.style.pointerEvents = 'none';
+                                        setSearchMapFind.style.opacity = '.5';
+                                    }
                                 }
                             }
-                        }
 
-                        map.on('drag', onDragEnd);
+                            map.on('drag', onDragEnd);
 
-                        map.on('zoom', onDragEnd);
-        
-                        map.on('zoomend', zoomValidate);
+                            map.on('zoom', onDragEnd);
+            
+                            map.on('zoomend', zoomValidate);
 
 
-                        // RETORNAR A LA VIEW HOME
-                        const setReturnHome = document.getElementById('setReturnHome');
-                        setReturnHome.addEventListener('click', function(e) {
-                            e.preventDefault();
+                            // RETORNAR A LA VIEW HOME
+                            const setReturnHome = document.getElementById('setReturnHome');
+                            setReturnHome.addEventListener('click', function(e) {
+                                e.preventDefault();
 
-                            const snackBar = document.querySelector('.mapboxgl_snackbar');
-                            if (snackBar) {
-                                snackBar.parentNode.removeChild(snackBar);
-                            }
+                                const snackBar = document.querySelector('.mapboxgl_snackbar');
+                                if (snackBar) {
+                                    snackBar.parentNode.removeChild(snackBar);
+                                }
 
-                            const errBlock = document.getElementById('mapBoxAction').querySelector('.err_block');
-                            if (errBlock) {
-                                errBlock.remove();
-                            }
+                                const errBlock = document.getElementById('mapBoxAction').querySelector('.err_block');
+                                if (errBlock) {
+                                    errBlock.remove();
+                                }
 
-                            document.getElementById('mapBoxAction').classList.remove('hidden');
-                            document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
+                                document.getElementById('mapBoxAction').classList.remove('hidden');
+                                document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
 
-                            marker.remove();
+                                marker.remove();
 
-                            map.flyTo({
-                                center: [-99.1332, 19.4326],
-                                zoom: 5, //5,
-                                speed: 1.5,
-                                curve: 1,
-                                essential: true
+                                map.flyTo({
+                                    center: [-99.1332, 19.4326],
+                                    zoom: 5, //5,
+                                    speed: 1.5,
+                                    curve: 1,
+                                    essential: true
+                                });
+
                             });
 
-                        });
-
-
-                        // AQUÍ DEBEMOS CARGAR EL MAPA CON EL MARKER DRAGGABLE PARA MANDAR LOS DATOS AL FORMULARIO
-                        const setSearchMap = document.getElementById('setSearchMap');
-                        setSearchMap.addEventListener('click', function(e) {
-                            e.preventDefault();
-
-                            marker.remove();
-
-                            const snackBar = document.querySelector('.mapboxgl_snackbar');
-                            if (snackBar) {
-                                snackBar.parentNode.removeChild(snackBar);
-                            }
+                            //probando manejador de eventos
+                            const setSearchMap = document.getElementById('setSearchMap');
                             
-                            document.getElementById('mapBoxForm').classList.add('show');
+                            const handleClick = (e) => {
 
-                            const formData = new FormData();
-                            const getLatitude = document.getElementById('mapFormLng').value;
-                            const getLongitude = document.getElementById('mapFormLt').value;
+                                console.log('hicimos click');
+                                e.preventDefault();
 
-                            formData.append('image', file);
-                            formData.append('latitude', getLatitude);
-                            formData.append('longitude', getLongitude);
+                                marker.remove();
 
-                            fetch('https://coastwards.labsourcing.com/api/contribute', {
-                                method: 'POST',
-                                body: formData
-                            })
-                            .then((response) => response.json())
-                            .then((data) => formDraggable(data.id, marker, file));
+                                const snackBar = document.querySelector('.mapboxgl_snackbar');
+                                if (snackBar) {
+                                    snackBar.parentNode.removeChild(snackBar);
+                                }
 
+                                document.getElementById('mapBoxForm').classList.add('show');
+
+                                const formData = new FormData();
+                                const getLatitude = document.getElementById('mapFormLng').value;
+                                const getLongitude = document.getElementById('mapFormLt').value;
+
+                                formData.append('image', file);
+                                formData.append('latitude', getLatitude);
+                                formData.append('longitude', getLongitude);
+
+                                fetch('https://coastwards.labsourcing.com/api/contribute', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then((response) => response.json())
+                                .then((data) => formDraggable(data.id, marker, file));
+
+                                // setSearchMap.removeEventListener('click', handleClick);
+                                // setSearchMap.addEventListener('click', handleClick);
+                            }
+
+                            setSearchMap.addEventListener('click', handleClick);
+
+
+                            // AQUÍ DEBEMOS CARGAR EL MAPA CON EL MARKER DRAGGABLE PARA MANDAR LOS DATOS AL FORMULARIO
+                            // const setSearchMap = document.getElementById('setSearchMap');
+                            // setSearchMap.addEventListener('click', function(e) {
+                            //     e.preventDefault();
+
+                            //     marker.remove();
+
+                            //     const snackBar = document.querySelector('.mapboxgl_snackbar');
+                            //     if (snackBar) {
+                            //         snackBar.parentNode.removeChild(snackBar);
+                            //     }
+                                
+                            //     document.getElementById('mapBoxForm').classList.add('show');
+
+                            //     const formData = new FormData();
+                            //     const getLatitude = document.getElementById('mapFormLng').value;
+                            //     const getLongitude = document.getElementById('mapFormLt').value;
+
+                            //     formData.append('image', file);
+                            //     formData.append('latitude', getLatitude);
+                            //     formData.append('longitude', getLongitude);
+
+                            //     fetch('https://coastwards.labsourcing.com/api/contribute', {
+                            //         method: 'POST',
+                            //         body: formData
+                            //     })
+                            //     .then((response) => response.json())
+                            //     .then((data) => formDraggable(data.id, marker, file));
+
+                            // });
+            
                         });
-        
-                    });
+                    }
+                }
 
-                });
+                mapBoxSearchCoordinate.addEventListener("click", handleSetCoordinatesClick);
+
             }
 
         }

@@ -13,22 +13,25 @@ const getsData = (idGet, markerGet) => {
 // AQUÍ SE ENVIA LA DATA DESDE UN FETCH POST
 document.getElementById('sendForm').addEventListener('click', (e) => {
     e.preventDefault();
+
     usePostForm(id, marker);
 });
 
 // FLUJO CUANDO LA IMAGEN TIENE GPS
-export const formApplication = (data, marker) => {
+export const formApplication = (data, marker, edit = 1) => {
+
+    if(edit) {
+        //AGREGO LOS VALORES A LOS INPUTS 
+        document.getElementById('mapFormId').value = data.id;
+        document.getElementById('mapFormLng').value = data.image.longuitud;
+        document.getElementById('mapFormLt').value = data.image.latitude;
+    }
 
     // OBTENEMOS EL ID QUE PROVIENE DE LA API
     const id = data.id; 
 
     // AQUÍ ENVIAMOS LOS DATOS DEL FORMULARIO AL POST
     getsData(id, marker);
-
-    //AGREGO LOS VALORES A LOS INPUTS 
-    document.getElementById('mapFormId').value = data.id;
-    document.getElementById('mapFormLng').value = data.image.longuitud;
-    document.getElementById('mapFormLt').value = data.image.latitude;
 
     // AQUÍ SE PUEDE ESCOGER EL DATA TYPE CON VALORES DE LAS OPCIONES MATERIAL
     const parentContentType = document.getElementById('mapBoxGetType');
@@ -96,7 +99,6 @@ export const formApplication = (data, marker) => {
     });
     
     checkBoxValid();
-
 
     console.log('flujo con GSP');
 
