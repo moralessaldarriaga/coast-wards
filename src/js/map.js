@@ -3,7 +3,7 @@ import { getData } from './getMarker';
 
 export const useMapBox = () => {
 
-  const apikey = `pk.eyJ1IjoiZWFjb3N0YXoiLCJhIjoiY2xlb3hlNGhxMDZ4bzNzcXVwanBvNW45MSJ9.bOrLGjKEMDGtdQHMBpelig`;
+  const apikey = `pk.eyJ1IjoiZ3VhcmRhY29zdGFzYyIsImEiOiJjbGV3eDc0bXowZmU5M3Btejg3eHc0dXZrIn0.K3a8gFLC7Uk2VRA0ELthWQ`;
 
   mapboxgl.accessToken = apikey;
 
@@ -18,7 +18,7 @@ export const useMapBox = () => {
 
     let map = new mapboxgl.Map({
       container: mapContainer,
-      style: 'mapbox://styles/eacostaz/clessg7db004101rncxj36i28',
+      style: 'mapbox://styles/guardacostasc/clf64kgtj000101o4bnqo7h9n',
       center: [-99.1332, 19.4326],
       zoom: 5, //5,
       logoPosition: 'bottom-right'

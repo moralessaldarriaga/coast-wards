@@ -100,7 +100,6 @@ export const formApplication = (data, marker, edit = 1) => {
     
     checkBoxValid();
 
-    console.log('flujo con GSP');
 
 }
 
@@ -188,6 +187,4 @@ export const formDraggable = (id, marker, file) => {
     }
 
     checkBoxValid();
-
-    console.log('flujo sin GSP');
 }

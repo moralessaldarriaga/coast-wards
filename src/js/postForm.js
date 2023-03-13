@@ -20,8 +20,6 @@ export const usePostForm = (id, marker) => {
     const dataLt = document.getElementById('mapFormLt').value;
     const dataColor = document.getElementById('mapFormColor').value;
 
-    console.log(dataLng + ' ' + dataLt);
-
     let data = JSON.stringify({
         'material': dataType,
         'comment': dataComment,

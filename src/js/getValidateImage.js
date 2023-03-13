@@ -240,7 +240,6 @@ export const getValidationImage = async(formData, loader, file) => {
                 const handleSetCoordinatesClick = (e) => {
 
                     if (!handleSetCoordinatesClickRegister) {
-                        console.log('hicis click al padre');
 
                         handleSetCoordinatesClickRegister = true;
 
@@ -364,7 +363,6 @@ export const getValidationImage = async(formData, loader, file) => {
                             
                             const handleClick = (e) => {
 
-                                console.log('hicimos click');
                                 e.preventDefault();
 
                                 marker.remove();
