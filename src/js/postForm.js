@@ -12,7 +12,7 @@ export const usePostForm = (id, marker) => {
     mapForm.classList.remove('show');
 
     // const dataId = document.getElementById('mapFormId').value;
-    const url = 'https://coastwards.labsourcing.com/api/contribute/'+ id;
+    const url = 'http://stagingback.guardacostascorona.com/api/contribute/'+ id;
 
     const dataType = document.getElementById('mapFormMaterial').value;
     const dataComment = document.querySelector('#mapFormComment').value;

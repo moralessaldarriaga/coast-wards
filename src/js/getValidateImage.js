@@ -10,7 +10,7 @@ export const getValidationImage = async(formData, loader, file) => {
         loader.classList.add('show');
         document.getElementById('mapBoxAction').classList.add('hidden');
 
-        const response = await fetch('https://coastwards.labsourcing.com/api/contribute', {
+        const response = await fetch('http://stagingback.guardacostascorona.com//api/contribute', {
             method: 'POST',
             body: formData
         });
@@ -382,7 +382,7 @@ export const getValidationImage = async(formData, loader, file) => {
                                 formData.append('latitude', getLatitude);
                                 formData.append('longitude', getLongitude);
 
-                                fetch('https://coastwards.labsourcing.com/api/contribute', {
+                                fetch('http://stagingback.guardacostascorona.com/api/contribute', {
                                     method: 'POST',
                                     body: formData
                                 })
