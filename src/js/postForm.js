@@ -12,7 +12,7 @@ export const usePostForm = (id, marker) => {
     mapForm.classList.remove('show');
 
     // const dataId = document.getElementById('mapFormId').value;
-    const url = 'http://stagingback.guardacostascorona.com/api/contribute/'+ id;
+    const url = 'https://stagingback.guardacostascorona.com/api/contribute/'+ id;
 
     const dataType = document.getElementById('mapFormMaterial').value;
     const dataComment = document.querySelector('#mapFormComment').value;
@@ -78,7 +78,9 @@ export const usePostForm = (id, marker) => {
     .finally(() => {
         loader.classList.remove('show');
         mapActions.querySelector('h1').style.display = 'block';
-        mapActions.querySelector('h1').innerHTML = '¡¡GENIAL!! Tu imagen se ha subido. ¡Otra! :)';
+        mapActions.querySelector('h2').style.display = 'block';
+        mapActions.querySelector('h1').innerHTML = '¡Gracias por ayudar a la ciencia! ¿Tienes otra fotografía?';
+        mapActions.querySelector('h2').innerHTML = 'Mientras más fotos subas, más datos para los científicos.';
         mapActions.classList.remove('hidden');
     
         if (mapActions.querySelector('.err_block') !== null) {

@@ -92,7 +92,8 @@ export const formApplication = (data, marker, edit = 1) => {
             childContentType.querySelector('span').innerHTML = 'radio_button_unchecked';
         });
 
-        document.getElementById('mapBoxAction').querySelector('h1').innerHTML = '¿Tienes fotos de costas?';
+        document.getElementById('mapBoxAction').querySelector('h1').innerHTML = 'Guardacostas Corona.';
+        document.getElementById('mapBoxAction').querySelector('h2').innerHTML = 'Sube una foto y ayuda a la ciencia a monitorear las costas.';
         document.getElementById('mapBoxAction').classList.remove('hidden');
 
         useCloseForm(marker);

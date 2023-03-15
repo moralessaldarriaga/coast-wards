@@ -634,7 +634,7 @@
             transition: all 600ms ease;
         }
         
-        h1{
+        :where(h1, h2){
             font-weight: 400;
             text-align: center;
         }

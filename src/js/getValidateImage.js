@@ -10,7 +10,7 @@ export const getValidationImage = async(formData, loader, file) => {
         loader.classList.add('show');
         document.getElementById('mapBoxAction').classList.add('hidden');
 
-        const response = await fetch('http://stagingback.guardacostascorona.com//api/contribute', {
+        const response = await fetch('https://stagingback.guardacostascorona.com/api/contribute', {
             method: 'POST',
             body: formData
         });
@@ -23,7 +23,8 @@ export const getValidationImage = async(formData, loader, file) => {
             // AQUÍ MANEJAMOS EVENTOS CON LA RESP DEL SERVIDOR
             loader.classList.remove('show');
             document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
-            
+            document.getElementById('mapBoxAction').querySelector('h2').style.display = 'block';
+
             let errorElement = document.querySelector('.err_block');
 
             if (errorElement) {
@@ -58,7 +59,7 @@ export const getValidationImage = async(formData, loader, file) => {
                 const elementBtns = document.createElement('div');
                 elementBtns.className = 'mapboxgl_snackbar mapboxgl_snackbar__response';
                 elementBtns.id = 'mapboxglFirstActions';
-                elementBtns.innerHTML = '<p>¿La ubicación se ve bien?</p>' +
+                elementBtns.innerHTML = '<p>¡Muy bien! ¿La ubicación es correcta?</p>' +
                 '<div class="mapboxgl_snackbar_actions">' +
                     '<a href="#" rel="noopener noreferrer" id="setZoomMap" class="btn btn__border">No</a>' +
                     '<a href="#" rel="noopener noreferrer" id="setFormMap" class="btn btn__blue">Si</a>' +
@@ -175,6 +176,7 @@ export const getValidationImage = async(formData, loader, file) => {
 
                         document.getElementById('mapBoxAction').classList.remove('hidden');
                         document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
+                        document.getElementById('mapBoxAction').querySelector('h2').style.display = 'block';
 
                         newMarker.remove();
 
@@ -210,6 +212,7 @@ export const getValidationImage = async(formData, loader, file) => {
             const errorObj = await response.json();
             
             document.getElementById('mapBoxAction').querySelector('h1').style.display = 'none';
+            document.getElementById('mapBoxAction').querySelector('h2').style.display = 'none';
 
             let errorElement = document.querySelector('.err_block');
 
@@ -345,6 +348,7 @@ export const getValidationImage = async(formData, loader, file) => {
 
                                 document.getElementById('mapBoxAction').classList.remove('hidden');
                                 document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
+                                document.getElementById('mapBoxAction').querySelector('h2').style.display = 'block';
 
                                 marker.remove();
 
@@ -382,7 +386,7 @@ export const getValidationImage = async(formData, loader, file) => {
                                 formData.append('latitude', getLatitude);
                                 formData.append('longitude', getLongitude);
 
-                                fetch('http://stagingback.guardacostascorona.com/api/contribute', {
+                                fetch('https://stagingback.guardacostascorona.com/api/contribute', {
                                     method: 'POST',
                                     body: formData
                                 })
@@ -394,38 +398,6 @@ export const getValidationImage = async(formData, loader, file) => {
                             }
 
                             setSearchMap.addEventListener('click', handleClick);
-
-
-                            // AQUÍ DEBEMOS CARGAR EL MAPA CON EL MARKER DRAGGABLE PARA MANDAR LOS DATOS AL FORMULARIO
-                            // const setSearchMap = document.getElementById('setSearchMap');
-                            // setSearchMap.addEventListener('click', function(e) {
-                            //     e.preventDefault();
-
-                            //     marker.remove();
-
-                            //     const snackBar = document.querySelector('.mapboxgl_snackbar');
-                            //     if (snackBar) {
-                            //         snackBar.parentNode.removeChild(snackBar);
-                            //     }
-                                
-                            //     document.getElementById('mapBoxForm').classList.add('show');
-
-                            //     const formData = new FormData();
-                            //     const getLatitude = document.getElementById('mapFormLng').value;
-                            //     const getLongitude = document.getElementById('mapFormLt').value;
-
-                            //     formData.append('image', file);
-                            //     formData.append('latitude', getLatitude);
-                            //     formData.append('longitude', getLongitude);
-
-                            //     fetch('https://coastwards.labsourcing.com/api/contribute', {
-                            //         method: 'POST',
-                            //         body: formData
-                            //     })
-                            //     .then((response) => response.json())
-                            //     .then((data) => formDraggable(data.id, marker, file));
-
-                            // });
             
                         });
                     }
