@@ -5,7 +5,8 @@ export const useCloseForm = (marker) => {
 
     let map = useMapBox();
 
-    // map.on('load', () => {
+    document.getElementById('tableData').innerHTML = '';
+    document.getElementById('tableData').classList.display = 'none';
 
     marker.remove();
     

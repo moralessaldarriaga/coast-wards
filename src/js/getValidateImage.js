@@ -19,6 +19,8 @@ export const getValidationImage = async(formData, loader, file) => {
 
             const data = await response.json();
 
+            console.log(data);
+
 
             // AQUÍ MANEJAMOS EVENTOS CON LA RESP DEL SERVIDOR
             loader.classList.remove('show');
@@ -157,6 +159,313 @@ export const getValidationImage = async(formData, loader, file) => {
                         document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ data.marked.properties.image +')';
 
                         formApplication(data, newMarker, 0);
+
+                        //creamos la tabla con los metadatos
+                        const elementTable = document.createElement('table');
+                        const elementTablePadre = document.getElementById('tableData')
+                        elementTable.innerHTML = `<table>
+                            <tr>
+                            <th>DIRECCIÓN IP</th>
+                            <th></th>
+                            </tr>
+                            <tr>
+                            <td>DIRECCIÓN IP</td>
+                            <td>We will save your IP Address upon upload</td>
+                            </tr>
+                            <tr>
+                            <th>IMAGEN</th>
+                            <th></th>
+                            </tr>
+                            <tr>
+                            <td>IMAGEN</td>
+                            <td>Guardamos la imagen con un ancho de 800 píxeles y eliminamos los metadatos</td>
+                            </tr>
+                            <tr>
+                            <td>Identificador único</td>
+                            <td>${data.image.uid}</td>
+                            </tr>
+                            <tr>
+                            <td>Latitud</td>
+                            <td>${data.image.latitude}</td>
+                            </tr>
+                            <tr>
+                            <td>Longitud</td>
+                            <td>${data.image.longuitud}</td>
+                            </tr>
+                            <tr>
+                            <td>Localización manual</td>
+                            <td>${data.image.manual}</td>
+                            </tr>
+                            <tr>
+                            <td>Localización correcta</td>
+                            <td>${data.image.corrected}</td>
+                            </tr>
+                            <tr>
+                            <td>Date/Time</td>
+                            <td>${data.image.datetime}</td>
+                            </tr>
+                            <tr>
+                            <th>ANOTACIONES</th>
+                            <th>PUNTAJE</th>
+                            </tr>
+                            <tr>
+                            <td>Planta</td>
+                            <td>${data.labels[3].score ? data.labels[3].score : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Cielo</td>
+                            <td>${data.labels[1].score ? data.labels[1].score : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Madera</td>
+                            <td>0</td>
+                            </tr>
+                            <tr>
+                            <td>Base</td>
+                            <td>0</td>
+                            </tr>
+                            <tr>
+                            <td>Muro</td>
+                            <td>0</td>
+                            </tr>
+                            <tr>
+                            <td>Nube</td>
+                            <td>${data.labels[0].score ? data.labels[0].score : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Pared de piedra</td>
+                            <td>0</td>
+                            </tr>
+                            <tr>
+                            <td>Paisaje</td>
+                            <td>${data.labels[8].score ? data.labels[8].score : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Formación</td>
+                            <td>0</td>
+                            </tr>
+                            <tr>
+                            <td>Area rural</td>
+                            <td>0</td>
+                            </tr>
+                            <tr>
+                            <th>DATOS EXIF</th>
+                            <th>VALOR</th>
+                            </tr>
+                            <tr>
+                            <td>Marca</td>
+                            <td>${data.exif.Make ? data.exif.Make : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Modelo</td>
+                            <td>${data.exif.Model ? data.exif.Model : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Orientación</td>
+                            <td>${data.exif.Orientation ? data.exif.Orientation : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Resolución X</td>
+                            <td>${data.exif.XResolution ? data.exif.XResolution : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Resolución Y</td>
+                            <td>${data.exif.YResolution ? data.exif.YResolution : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Unidad de resolución</td>
+                            <td>${data.exif.ResolutionUnit ? data.exif.ResolutionUnit : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Software</td>
+                            <td>${data.exif.Software ? data.exif.Software : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Fecha y hora</td>
+                            <td>${data.exif.datetime ? data.exif.datetime : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>YCbCrPositioning</td>
+                            <td>${data.exif.YCbCrPositioning ? data.exif.YCbCrPositioning : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>ExifIFDPointer</td>
+                            <td>${data.exif.Exif_IFD_Pointer ? data.exif.Exif_IFD_Pointer : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSInfoIFDPointer</td>
+                            <td>${data.exif.GPS_IFD_Pointer ? data.exif.GPS_IFD_Pointer : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>ExposureTime</td>
+                            <td>${data.exif.ExposureTime ? data.exif.ExposureTime : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>FNumber</td>
+                            <td>${data.exif.FNumber ? data.exif.FNumber : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>ExposureProgram</td>
+                            <td>${data.exif.ExposureProgram ? data.exif.ExposureProgram : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>ISOSpeedRatings</td>
+                            <td>${data.exif.ISOSpeedRatings ? data.exif.ISOSpeedRatings : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>ExifVersion</td>
+                            <td>${data.exif.ExifVersion ? data.exif.ExifVersion : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>DateTimeOriginal</td>
+                            <td>${data.exif.DateTimeOriginal ? data.exif.DateTimeOriginal : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>DateTimeDigitized</td>
+                            <td>${data.exif.DateTimeDigitized ? data.exif.DateTimeDigitized : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>ComponentsConfiguration</td>
+                            <td>${data.exif.ComponentsConfiguration ? data.exif.ComponentsConfiguration : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>ShutterSpeedValue</td>
+                            <td>${data.exif.ShutterSpeedValue ? data.exif.ShutterSpeedValue : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>ApertureValue</td>
+                            <td>${data.exif.ApertureValue ? data.exif.ApertureValue : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>BrightnessValue</td>
+                            <td>${data.exif.BrightnessValue ? data.exif.BrightnessValue : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>ExposureBias</td>
+                            <td>${data.exif.ExposureBiasValue ? data.exif.ExposureBiasValue : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>MeteringMode</td>
+                            <td>${data.exif.MeteringMode ? data.exif.MeteringMode : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>Flash</td>
+                            <td>${data.exif.Flash ? data.exif.Flash : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>FocalLength</td>
+                            <td>${data.exif.FocalLength ? data.exif.FocalLength : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>SubjectArea</td>
+                            <td>${data.exif.SubjectArea ? data.exif.SubjectArea : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>SubsecTimeOriginal</td>
+                            <td>${data.exif.SubSecTimeOriginal ? data.exif.SubSecTimeOriginal : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>SubsecTimeDigitized</td>
+                            <td>${data.exif.SubsecTimeDigitized ? data.exif.SubsecTimeDigitized : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>FlashpixVersion</td>
+                            <td>${data.exif.FlashPixVersion ? data.exif.FlashPixVersion : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>ColorSpace</td>
+                            <td>${data.exif.ColorSpace ? data.exif.ColorSpace : ''}</td>
+                            <tr>
+                            <td>PixelXDimension</td>
+                            <td>${data.exif.PixelXDimension ? data.exif.PixelXDimension : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>PixelYDimension</td>
+                            <td>${data.exif.PixelYDimension ? data.exif.PixelYDimension : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>SensingMethod</td>
+                            <td>${data.exif.SensingMethod ? data.exif.SensingMethod : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>SceneType</td>
+                            <td>${data.exif.SceneType ? data.exif.SceneType : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>CustomRendered</td>
+                            <td>${data.exif.CustomRendered ? data.exif.CustomRendered : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>ExposureMode</td>
+                            <td>${data.exif.ExposureMode ? data.exif.ExposureMode : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>WhiteBalance</td>
+                            <td>${data.exif.WhiteBalance ? data.exif.WhiteBalance : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>FocalLengthIn35mmFilm</td>
+                            <td>${data.exif.FocalLengthIn35mmFilm ? data.exif.FocalLengthIn35mmFilm : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>SceneCaptureType</td>
+                            <td>${data.exif.SceneCaptureType ? data.exif.SceneCaptureType : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSLatitudeRef</td>
+                            <td>${data.exif.GPSLatitudeRef ? data.exif.GPSLatitudeRef : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSLatitude</td>
+                            <td>${data.exif && data.exif.GPSLatitude ? `${data.exif.GPSLatitude[0]}, ${data.exif.GPSLatitude[1]}, ${data.exif.GPSLatitude[2]}` : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSLongitudeRef</td>
+                            <td>${data.exif.GPSLongitudeRef ? data.exif.GPSLongitudeRef : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSLongitude</td>
+                            <td>${data.exif && data.exif.GPSLongitude ? `${data.exif.GPSLongitude[0]}, ${data.exif.GPSLongitude[1]}, ${data.exif.GPSLongitude[2]}` : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSAltitudeRef</td>
+                            <td>${data.exif.GPSAltitudeRef ? data.exif.GPSAltitudeRef : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSAltitude</td>
+                            <td>${data.exif.GPSAltitude ? data.exif.GPSAltitude : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSSpeedRef</td>
+                            <td>${data.exif.GPSSpeedRef ? data.exif.GPSSpeedRef : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSSpeed</td>
+                            <td>${data.exif.GPSSpeed ? data.exif.GPSSpeed : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSImgDirectionRef</td>
+                            <td>${data.exif.GPSImgDirectionRef ? data.exif.GPSImgDirectionRef : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSImgDirection</td>
+                            <td>${data.exif.GPSImgDirection ? data.exif.GPSImgDirection : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSDestBearingRef</td>
+                            <td>${data.exif.GPSDestBearingRef ? data.exif.GPSDestBearingRef : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSDestBearing</td>
+                            <td>${data.exif.GPSDestBearing ? data.exif.GPSDestBearing : ''}</td>
+                            </tr>
+                            <tr>
+                            <td>GPSDateStamp</td>
+                            <td>${data.exif.GPSDateStamp ? data.exif.GPSDateStamp : ''}</td>
+                            </tr>
+                        </table>`;
+
+                        elementTablePadre.insertBefore(elementTable, elementTablePadre.firstChild);
                     });
 
                     // RETORNAR A LA VIEW HOME
@@ -202,6 +511,315 @@ export const getValidationImage = async(formData, loader, file) => {
                     document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ data.marked.properties.image +')';
                     
                     formApplication(data, marker);
+
+                    //creamos la tabla con los metadatos
+                    const elementTable = document.createElement('table');
+                    const elementTablePadre = document.getElementById('tableData')
+                    elementTable.innerHTML = `<table>
+                        <tr>
+                        <th>DIRECCIÓN IP</th>
+                        <th></th>
+                        </tr>
+                        <tr>
+                        <td>DIRECCIÓN IP</td>
+                        <td>We will save your IP Address upon upload</td>
+                        </tr>
+                        <tr>
+                        <th>IMAGEN</th>
+                        <th></th>
+                        </tr>
+                        <tr>
+                        <td>IMAGEN</td>
+                        <td>Guardamos la imagen con un ancho de 800 píxeles y eliminamos los metadatos</td>
+                        </tr>
+                        <tr>
+                        <td>Identificador único</td>
+                        <td>${data.image.uid}</td>
+                        </tr>
+                        <tr>
+                        <td>Latitud</td>
+                        <td>${data.image.latitude}</td>
+                        </tr>
+                        <tr>
+                        <td>Longitud</td>
+                        <td>${data.image.longuitud}</td>
+                        </tr>
+                        <tr>
+                        <td>Localización manual</td>
+                        <td>${data.image.manual}</td>
+                        </tr>
+                        <tr>
+                        <td>Localización correcta</td>
+                        <td>${data.image.corrected}</td>
+                        </tr>
+                        <tr>
+                        <td>Date/Time</td>
+                        <td>${data.image.datetime}</td>
+                        </tr>
+                        <tr>
+                        <th>ANOTACIONES</th>
+                        <th>PUNTAJE</th>
+                        </tr>
+                        <tr>
+                        <td>Planta</td>
+                        <td>${data.labels[3].score ? data.labels[3].score : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Cielo</td>
+                        <td>${data.labels[1].score ? data.labels[1].score : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Madera</td>
+                        <td>0</td>
+                        </tr>
+                        <tr>
+                        <td>Base</td>
+                        <td>0</td>
+                        </tr>
+                        <tr>
+                        <td>Muro</td>
+                        <td>0</td>
+                        </tr>
+                        <tr>
+                        <td>Nube</td>
+                        <td>${data.labels[0].score ? data.labels[0].score : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Pared de piedra</td>
+                        <td>0</td>
+                        </tr>
+                        <tr>
+                        <td>Paisaje</td>
+                        <td>${data.labels[8].score ? data.labels[8].score : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Formación</td>
+                        <td>0</td>
+                        </tr>
+                        <tr>
+                        <td>Area rural</td>
+                        <td>0</td>
+                        </tr>
+                        <tr>
+                        <th>DATOS EXIF</th>
+                        <th>VALOR</th>
+                        </tr>
+                        <tr>
+                        <td>Marca</td>
+                        <td>${data.exif.Make ? data.exif.Make : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Modelo</td>
+                        <td>${data.exif.Model ? data.exif.Model : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Orientación</td>
+                        <td>${data.exif.Orientation ? data.exif.Orientation : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Resolución X</td>
+                        <td>${data.exif.XResolution ? data.exif.XResolution : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Resolución Y</td>
+                        <td>${data.exif.YResolution ? data.exif.YResolution : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Unidad de resolución</td>
+                        <td>${data.exif.ResolutionUnit ? data.exif.ResolutionUnit : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Software</td>
+                        <td>${data.exif.Software ? data.exif.Software : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Fecha y hora</td>
+                        <td>${data.exif.datetime ? data.exif.datetime : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>YCbCrPositioning</td>
+                        <td>${data.exif.YCbCrPositioning ? data.exif.YCbCrPositioning : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>ExifIFDPointer</td>
+                        <td>${data.exif.Exif_IFD_Pointer ? data.exif.Exif_IFD_Pointer : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSInfoIFDPointer</td>
+                        <td>${data.exif.GPS_IFD_Pointer ? data.exif.GPS_IFD_Pointer : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>ExposureTime</td>
+                        <td>${data.exif.ExposureTime ? data.exif.ExposureTime : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>FNumber</td>
+                        <td>${data.exif.FNumber ? data.exif.FNumber : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>ExposureProgram</td>
+                        <td>${data.exif.ExposureProgram ? data.exif.ExposureProgram : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>ISOSpeedRatings</td>
+                        <td>${data.exif.ISOSpeedRatings ? data.exif.ISOSpeedRatings : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>ExifVersion</td>
+                        <td>${data.exif.ExifVersion ? data.exif.ExifVersion : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>DateTimeOriginal</td>
+                        <td>${data.exif.DateTimeOriginal ? data.exif.DateTimeOriginal : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>DateTimeDigitized</td>
+                        <td>${data.exif.DateTimeDigitized ? data.exif.DateTimeDigitized : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>ComponentsConfiguration</td>
+                        <td>${data.exif.ComponentsConfiguration ? data.exif.ComponentsConfiguration : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>ShutterSpeedValue</td>
+                        <td>${data.exif.ShutterSpeedValue ? data.exif.ShutterSpeedValue : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>ApertureValue</td>
+                        <td>${data.exif.ApertureValue ? data.exif.ApertureValue : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>BrightnessValue</td>
+                        <td>${data.exif.BrightnessValue ? data.exif.BrightnessValue : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>ExposureBias</td>
+                        <td>${data.exif.ExposureBiasValue ? data.exif.ExposureBiasValue : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>MeteringMode</td>
+                        <td>${data.exif.MeteringMode ? data.exif.MeteringMode : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>Flash</td>
+                        <td>${data.exif.Flash ? data.exif.Flash : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>FocalLength</td>
+                        <td>${data.exif.FocalLength ? data.exif.FocalLength : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>SubjectArea</td>
+                        <td>${data.exif.SubjectArea ? data.exif.SubjectArea : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>SubsecTimeOriginal</td>
+                        <td>${data.exif.SubSecTimeOriginal ? data.exif.SubSecTimeOriginal : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>SubsecTimeDigitized</td>
+                        <td>${data.exif.SubsecTimeDigitized ? data.exif.SubsecTimeDigitized : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>FlashpixVersion</td>
+                        <td>${data.exif.FlashPixVersion ? data.exif.FlashPixVersion : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>ColorSpace</td>
+                        <td>${data.exif.ColorSpace ? data.exif.ColorSpace : ''}</td>
+                        <tr>
+                        <td>PixelXDimension</td>
+                        <td>${data.exif.PixelXDimension ? data.exif.PixelXDimension : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>PixelYDimension</td>
+                        <td>${data.exif.PixelYDimension ? data.exif.PixelYDimension : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>SensingMethod</td>
+                        <td>${data.exif.SensingMethod ? data.exif.SensingMethod : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>SceneType</td>
+                        <td>${data.exif.SceneType ? data.exif.SceneType : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>CustomRendered</td>
+                        <td>${data.exif.CustomRendered ? data.exif.CustomRendered : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>ExposureMode</td>
+                        <td>${data.exif.ExposureMode ? data.exif.ExposureMode : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>WhiteBalance</td>
+                        <td>${data.exif.WhiteBalance ? data.exif.WhiteBalance : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>FocalLengthIn35mmFilm</td>
+                        <td>${data.exif.FocalLengthIn35mmFilm ? data.exif.FocalLengthIn35mmFilm : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>SceneCaptureType</td>
+                        <td>${data.exif.SceneCaptureType ? data.exif.SceneCaptureType : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSLatitudeRef</td>
+                        <td>${data.exif.GPSLatitudeRef ? data.exif.GPSLatitudeRef : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSLatitude</td>
+                        <td>${data.exif && data.exif.GPSLatitude ? `${data.exif.GPSLatitude[0]}, ${data.exif.GPSLatitude[1]}, ${data.exif.GPSLatitude[2]}` : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSLongitudeRef</td>
+                        <td>${data.exif.GPSLongitudeRef ? data.exif.GPSLongitudeRef : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSLongitude</td>
+                        <td>${data.exif && data.exif.GPSLongitude ? `${data.exif.GPSLongitude[0]}, ${data.exif.GPSLongitude[1]}, ${data.exif.GPSLongitude[2]}` : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSAltitudeRef</td>
+                        <td>${data.exif.GPSAltitudeRef ? data.exif.GPSAltitudeRef : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSAltitude</td>
+                        <td>${data.exif.GPSAltitude ? data.exif.GPSAltitude : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSSpeedRef</td>
+                        <td>${data.exif.GPSSpeedRef ? data.exif.GPSSpeedRef : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSSpeed</td>
+                        <td>${data.exif.GPSSpeed ? data.exif.GPSSpeed : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSImgDirectionRef</td>
+                        <td>${data.exif.GPSImgDirectionRef ? data.exif.GPSImgDirectionRef : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSImgDirection</td>
+                        <td>${data.exif.GPSImgDirection ? data.exif.GPSImgDirection : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSDestBearingRef</td>
+                        <td>${data.exif.GPSDestBearingRef ? data.exif.GPSDestBearingRef : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSDestBearing</td>
+                        <td>${data.exif.GPSDestBearing ? data.exif.GPSDestBearing : ''}</td>
+                        </tr>
+                        <tr>
+                        <td>GPSDateStamp</td>
+                        <td>${data.exif.GPSDateStamp ? data.exif.GPSDateStamp : ''}</td>
+                        </tr>
+                    </table>`;
+
+                    elementTablePadre.insertBefore(elementTable, elementTablePadre.firstChild);
+
+
                 });
 
             });
@@ -210,7 +828,7 @@ export const getValidationImage = async(formData, loader, file) => {
         } else { 
 
             const errorObj = await response.json();
-            
+
             document.getElementById('mapBoxAction').querySelector('h1').style.display = 'none';
             document.getElementById('mapBoxAction').querySelector('h2').style.display = 'none';
 
@@ -391,10 +1009,320 @@ export const getValidationImage = async(formData, loader, file) => {
                                     body: formData
                                 })
                                 .then((response) => response.json())
-                                .then((data) => formDraggable(data.id, marker, file));
+                                .then((data) => {
 
-                                // setSearchMap.removeEventListener('click', handleClick);
-                                // setSearchMap.addEventListener('click', handleClick);
+                                    console.log(data);
+
+                                    //creamos la tabla con los metadatos
+                                    const elementTable = document.createElement('table');
+                                    const elementTablePadre = document.getElementById('tableData')
+                                    elementTable.innerHTML = `<table>
+                                        <tr>
+                                        <th>DIRECCIÓN IP</th>
+                                        <th></th>
+                                        </tr>
+                                        <tr>
+                                        <td>DIRECCIÓN IP</td>
+                                        <td>We will save your IP Address upon upload</td>
+                                        </tr>
+                                        <tr>
+                                        <th>IMAGEN</th>
+                                        <th></th>
+                                        </tr>
+                                        <tr>
+                                        <td>IMAGEN</td>
+                                        <td>Guardamos la imagen con un ancho de 800 píxeles y eliminamos los metadatos</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Identificador único</td>
+                                        <td>${data.image.uid}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Latitud</td>
+                                        <td>${data.image.latitude}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Longitud</td>
+                                        <td>${data.image.longuitud}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Localización manual</td>
+                                        <td>${data.image.manual}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Localización correcta</td>
+                                        <td>${data.image.corrected}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Date/Time</td>
+                                        <td>${data.image.datetime}</td>
+                                        </tr>
+                                        <tr>
+                                        <th>ANOTACIONES</th>
+                                        <th>PUNTAJE</th>
+                                        </tr>
+                                        <tr>
+                                        <td>Planta</td>
+                                        <td>${data.labels[3].score ? data.labels[3].score : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Cielo</td>
+                                        <td>${data.labels[1].score ? data.labels[1].score : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Madera</td>
+                                        <td>0</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Base</td>
+                                        <td>0</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Muro</td>
+                                        <td>0</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Nube</td>
+                                        <td>${data.labels[0].score ? data.labels[0].score : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Pared de piedra</td>
+                                        <td>0</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Paisaje</td>
+                                        <td>${data.labels[8].score ? data.labels[8].score : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Formación</td>
+                                        <td>0</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Area rural</td>
+                                        <td>0</td>
+                                        </tr>
+                                        <tr>
+                                        <th>DATOS EXIF</th>
+                                        <th>VALOR</th>
+                                        </tr>
+                                        <tr>
+                                        <td>Marca</td>
+                                        <td>${data.exif.Make ? data.exif.Make : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Modelo</td>
+                                        <td>${data.exif.Model ? data.exif.Model : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Orientación</td>
+                                        <td>${data.exif.Orientation ? data.exif.Orientation : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Resolución X</td>
+                                        <td>${data.exif.XResolution ? data.exif.XResolution : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Resolución Y</td>
+                                        <td>${data.exif.YResolution ? data.exif.YResolution : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Unidad de resolución</td>
+                                        <td>${data.exif.ResolutionUnit ? data.exif.ResolutionUnit : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Software</td>
+                                        <td>${data.exif.Software ? data.exif.Software : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Fecha y hora</td>
+                                        <td>${data.exif.datetime ? data.exif.datetime : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>YCbCrPositioning</td>
+                                        <td>${data.exif.YCbCrPositioning ? data.exif.YCbCrPositioning : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>ExifIFDPointer</td>
+                                        <td>${data.exif.Exif_IFD_Pointer ? data.exif.Exif_IFD_Pointer : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSInfoIFDPointer</td>
+                                        <td>${data.exif.GPS_IFD_Pointer ? data.exif.GPS_IFD_Pointer : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>ExposureTime</td>
+                                        <td>${data.exif.ExposureTime ? data.exif.ExposureTime : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>FNumber</td>
+                                        <td>${data.exif.FNumber ? data.exif.FNumber : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>ExposureProgram</td>
+                                        <td>${data.exif.ExposureProgram ? data.exif.ExposureProgram : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>ISOSpeedRatings</td>
+                                        <td>${data.exif.ISOSpeedRatings ? data.exif.ISOSpeedRatings : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>ExifVersion</td>
+                                        <td>${data.exif.ExifVersion ? data.exif.ExifVersion : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>DateTimeOriginal</td>
+                                        <td>${data.exif.DateTimeOriginal ? data.exif.DateTimeOriginal : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>DateTimeDigitized</td>
+                                        <td>${data.exif.DateTimeDigitized ? data.exif.DateTimeDigitized : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>ComponentsConfiguration</td>
+                                        <td>${data.exif.ComponentsConfiguration ? data.exif.ComponentsConfiguration : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>ShutterSpeedValue</td>
+                                        <td>${data.exif.ShutterSpeedValue ? data.exif.ShutterSpeedValue : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>ApertureValue</td>
+                                        <td>${data.exif.ApertureValue ? data.exif.ApertureValue : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>BrightnessValue</td>
+                                        <td>${data.exif.BrightnessValue ? data.exif.BrightnessValue : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>ExposureBias</td>
+                                        <td>${data.exif.ExposureBiasValue ? data.exif.ExposureBiasValue : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>MeteringMode</td>
+                                        <td>${data.exif.MeteringMode ? data.exif.MeteringMode : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Flash</td>
+                                        <td>${data.exif.Flash ? data.exif.Flash : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>FocalLength</td>
+                                        <td>${data.exif.FocalLength ? data.exif.FocalLength : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>SubjectArea</td>
+                                        <td>${data.exif.SubjectArea ? data.exif.SubjectArea : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>SubsecTimeOriginal</td>
+                                        <td>${data.exif.SubSecTimeOriginal ? data.exif.SubSecTimeOriginal : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>SubsecTimeDigitized</td>
+                                        <td>${data.exif.SubsecTimeDigitized ? data.exif.SubsecTimeDigitized : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>FlashpixVersion</td>
+                                        <td>${data.exif.FlashPixVersion ? data.exif.FlashPixVersion : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>ColorSpace</td>
+                                        <td>${data.exif.ColorSpace ? data.exif.ColorSpace : ''}</td>
+                                        <tr>
+                                        <td>PixelXDimension</td>
+                                        <td>${data.exif.PixelXDimension ? data.exif.PixelXDimension : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>PixelYDimension</td>
+                                        <td>${data.exif.PixelYDimension ? data.exif.PixelYDimension : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>SensingMethod</td>
+                                        <td>${data.exif.SensingMethod ? data.exif.SensingMethod : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>SceneType</td>
+                                        <td>${data.exif.SceneType ? data.exif.SceneType : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>CustomRendered</td>
+                                        <td>${data.exif.CustomRendered ? data.exif.CustomRendered : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>ExposureMode</td>
+                                        <td>${data.exif.ExposureMode ? data.exif.ExposureMode : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>WhiteBalance</td>
+                                        <td>${data.exif.WhiteBalance ? data.exif.WhiteBalance : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>FocalLengthIn35mmFilm</td>
+                                        <td>${data.exif.FocalLengthIn35mmFilm ? data.exif.FocalLengthIn35mmFilm : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>SceneCaptureType</td>
+                                        <td>${data.exif.SceneCaptureType ? data.exif.SceneCaptureType : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSLatitudeRef</td>
+                                        <td>${data.exif.GPSLatitudeRef ? data.exif.GPSLatitudeRef : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSLatitude</td>
+                                        <td>${data.exif && data.exif.GPSLatitude ? `${data.exif.GPSLatitude[0]}, ${data.exif.GPSLatitude[1]}, ${data.exif.GPSLatitude[2]}` : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSLongitudeRef</td>
+                                        <td>${data.exif.GPSLongitudeRef ? data.exif.GPSLongitudeRef : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSLongitude</td>
+                                        <td>${data.exif && data.exif.GPSLongitude ? `${data.exif.GPSLongitude[0]}, ${data.exif.GPSLongitude[1]}, ${data.exif.GPSLongitude[2]}` : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSAltitudeRef</td>
+                                        <td>${data.exif.GPSAltitudeRef ? data.exif.GPSAltitudeRef : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSAltitude</td>
+                                        <td>${data.exif.GPSAltitude ? data.exif.GPSAltitude : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSSpeedRef</td>
+                                        <td>${data.exif.GPSSpeedRef ? data.exif.GPSSpeedRef : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSSpeed</td>
+                                        <td>${data.exif.GPSSpeed ? data.exif.GPSSpeed : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSImgDirectionRef</td>
+                                        <td>${data.exif.GPSImgDirectionRef ? data.exif.GPSImgDirectionRef : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSImgDirection</td>
+                                        <td>${data.exif.GPSImgDirection ? data.exif.GPSImgDirection : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSDestBearingRef</td>
+                                        <td>${data.exif.GPSDestBearingRef ? data.exif.GPSDestBearingRef : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSDestBearing</td>
+                                        <td>${data.exif.GPSDestBearing ? data.exif.GPSDestBearing : ''}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>GPSDateStamp</td>
+                                        <td>${data.exif.GPSDateStamp ? data.exif.GPSDateStamp : ''}</td>
+                                        </tr>
+                                    </table>`;
+
+                                    elementTablePadre.insertBefore(elementTable, elementTablePadre.firstChild);
+
+                                    formDraggable(data.id, marker, file);
+                                });
+
                             }
 
                             setSearchMap.addEventListener('click', handleClick);

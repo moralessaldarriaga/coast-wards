@@ -14,6 +14,8 @@ const getsData = (idGet, markerGet) => {
 document.getElementById('sendForm').addEventListener('click', (e) => {
     e.preventDefault();
 
+    document.getElementById('tableData').innerHTML = '';
+    document.getElementById('tableData').classList.display = 'none';
     usePostForm(id, marker);
 });
 
@@ -164,6 +166,7 @@ export const formDraggable = (id, marker, file) => {
 
         document.getElementById('mapBoxAction').querySelector('.err_block').remove();
         document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
+        document.getElementById('mapBoxAction').querySelector('h2').style.display = 'block';
         document.getElementById('mapBoxAction').classList.remove('hidden');
 
     });

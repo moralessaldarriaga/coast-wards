@@ -6,7 +6,8 @@
     width: 100%;
     height: 100%;
     top: 0; 
-    bottom: 0; 
+    bottom: 0;
+    z-index: 3;
 }
 
 .mapboxgl-ctrl{
@@ -154,28 +155,125 @@
 .mapbox{
     position: relative;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
 
-    &_terms{
-        padding: 2rem 0;
-        display: flex;
+    &_made{
+        overflow-y: scroll;
+        padding: 0 0 2rem 0;
+        display: none;
         background-color: var(--color-white);
         position: fixed;
         width: 100%;
         height: 100%;
         flex-direction: column;
-        z-index: 3;
+        z-index: 5;
 
         //animation
         visibility: hidden;
-        backface-visibility: hidden;
         opacity: 0;
         transition: all 600ms ease;
         color: var(--color-black);
 
         &.show{
+            display: flex;
             visibility: visible;
-            backface-visibility: visible;
+            opacity: 1;
+        }
+
+        &_accordion{
+            &_btn{
+                display: flex;
+                place-content: space-between;
+                place-items: center;
+                cursor: pointer;
+                padding: 1rem 0;
+                color: var(--main-color);
+                border-bottom: 1px solid rgba(0,0,0,.1);
+
+                &__last{
+                    border-bottom: none;
+                }
+
+                &.active{
+                    span{
+                        transform: rotate(90deg);
+                    }
+                }
+
+                span{
+                    transform: rotate(0deg);
+                    transition: all 600ms ease;
+                }
+
+                h3{
+                    font-size: 1.2rem;
+                    font-weight: 400;
+
+                    @media only screen and (max-width: 600px) {
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+            &_data{
+                padding: 2rem 0;
+                display: none;
+                background-color: var(--color-white);
+                overflow: hidden;
+            }
+        }
+
+        h1{
+            font-family: var(--font-roboto-slab);
+            margin: 0 0 2rem 0;
+        }
+
+        p{
+            margin: 0 0 1rem 0;
+        }
+
+        > a{
+            color: var(--main-color);
+            font-weight: 600;
+        }
+
+        &_action{
+            background: hsla(0,0%,100%,.9);
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: flex-end;
+            margin: 0 0 2rem 0;
+            padding: 2rem 0;
+            z-index: 1;
+
+            span{
+                font-size: 2rem;
+                color: var(--main-color);
+            }
+        }
+    }
+
+    &_terms{
+        padding: 2rem 0;
+        display: none;
+        background-color: var(--color-white);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        z-index: 5;
+
+        //animation
+        visibility: hidden;
+        opacity: 0;
+        transition: all 600ms ease;
+        color: var(--color-black);
+
+        &.show{
+            display: flex;
+            visibility: visible;
             opacity: 1;
         }
 
@@ -213,7 +311,7 @@
 
     &_coordinates{
         padding: 1rem;
-        display: flex;
+        display: none;
         flex-direction: column;
         place-content: center;
         place-items: center;
@@ -221,16 +319,15 @@
         position: fixed;
         width: 100%;
         height: 100%;
-        z-index: 3;
+        z-index: 4;
         color: var(--color-black);
         visibility: hidden;
-        backface-visibility: hidden;
         opacity: 0;
         transition: all 600ms ease;
 
         &.show{
+            display: flex;
             visibility: visible;
-            backface-visibility: visible;
             opacity: 1;
         }
 
@@ -261,7 +358,7 @@
     }
 
     &_form{
-        z-index: 2;
+        z-index: 4;
         position: fixed;
         width: 100%;
         height: 100%;
@@ -499,8 +596,13 @@
                     }
 
                     span{
+                        transform: rotate(0deg);
                         color: var(--main-color);
                         margin: 0;
+
+                        &.rotate{
+                            transform: rotate(90deg);
+                        }
                     }
                 }
 
@@ -514,6 +616,7 @@
                     width: 100%;
                     border-spacing: 0;
                     text-align: left;
+                    margin: 0 0 1rem 0;
 
                     th{
                         padding: 1rem 0 .5rem 0;
@@ -579,7 +682,7 @@
     }
 
     &_err{
-        display: flex;
+        display: none;
         flex-direction: column;
         place-content: center;
         place-items: center;
@@ -592,15 +695,13 @@
 
         //animation
         visibility: visible;
-        backface-visibility: visible;
         opacity: 1;
         transition: all 600ms ease;
 
         &.hidden{
+            display: flex;
             visibility: hidden;
-            backface-visibility: hidden;
             opacity: 0;
-            transition: all 600ms ease;
         }
         
         h2{
@@ -618,20 +719,18 @@
         position: fixed;
         width: 100%;
         height: 100%;
-        z-index: 3;
+        z-index: 4;
         color: var(--color-black);
 
         //animation
         visibility: visible;
-        backface-visibility: visible;
         opacity: 1;
         transition: all 600ms ease;
 
         &.hidden{
+            display: none;
             visibility: hidden;
-            backface-visibility: hidden;
             opacity: 0;
-            transition: all 600ms ease;
         }
         
         :where(h1, h2){
@@ -648,7 +747,7 @@
 
     &_shared{
         padding: 2rem 0;
-        display: flex;
+        display: none;
         background-color: var(--color-white);
         position: fixed;
         width: 100%;
@@ -658,7 +757,6 @@
 
         //animation
         visibility: hidden;
-        backface-visibility: hidden;
         opacity: 0;
         transition: all 600ms ease;
         color: var(--color-black);
@@ -696,8 +794,8 @@
 
 
         &.show{
+            display: flex;
             visibility: visible;
-            backface-visibility: visible;
             opacity: 1;
         }
     }
@@ -710,13 +808,12 @@
         color: var(--color-black);
         z-index: 3;
         padding: 2rem 0;
-        display: flex;
+        display: none;
         place-content: center;
         place-items: center;
 
         //animation
         visibility: hidden;
-        backface-visibility: hidden;
         opacity: 0;
         transition: all 600ms ease;
 
@@ -726,8 +823,8 @@
         }
 
         &.show{
+            display: flex;
             visibility: visible;
-            backface-visibility: visible;
             opacity: 1;
         }
 
@@ -836,7 +933,7 @@
     &gl_snackbar{
         max-width: 500px;
         width: 100%;
-        position: absolute;
+        position: fixed;
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
@@ -847,6 +944,12 @@
         flex-direction: column;
         gap: 1rem;
         text-align: center;
+        z-index: 4;
+
+        @media only screen and (max-width: 600px) {
+            bottom: unset;
+            top: 0;
+        }
 
         &_actions{
             display: flex;
