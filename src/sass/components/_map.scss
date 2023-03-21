@@ -105,12 +105,18 @@
         }
     
         &_report{
+            cursor: pointer;
             position: absolute;
             top: 10px;
             right: 10px;
             color: var(--color-white);
             opacity: .5;
             display: flex;
+            transition: all 600ms ease;
+
+            &:hover{
+                opacity: 1;
+            }
 
             span{
                 font-size: 1.2rem;
@@ -157,6 +163,92 @@
     width: 100vw;
     min-height: 100vh;
     overflow: hidden;
+
+    &_report{
+        padding: 2rem 0;
+        display: none;
+        background-color: var(--color-white);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        z-index: 5;
+
+        //animation
+        visibility: hidden;
+        opacity: 0;
+        transition: all 600ms ease;
+        color: var(--color-black);
+
+        &.show{
+            display: flex;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        &_block{
+            --padding: 0em;
+            width: min(100% - var(--padding), 760px);
+            margin-inline: auto;
+        }
+    
+        h1{
+            font-family: var(--font-roboto-slab);
+            margin: 0 0 2rem 0;
+        }
+
+        p{
+            margin: 0 0 1rem 0;
+        }
+
+        > a{
+            color: var(--main-color);
+            font-weight: 600;
+        }
+
+        &_action{
+            display: flex;
+            justify-content: flex-end;
+            margin: 0 0 2rem 0;
+
+            a{
+                text-transform: uppercase;
+            }
+
+            span{
+                font-size: 2rem;
+                color: var(--main-color);
+            }
+        }
+
+        &_form{
+            margin: 2rem 0 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+
+            &_message{
+                margin: 1rem 0 0 0;
+            }
+
+            &_input{
+                padding: 1rem;
+                font-size: 1rem;
+                border: 1px solid #ccc;
+                display: block;
+                appearance: none;
+                border-radius: 2px;
+                width: 100%;
+                outline: none;
+                background-color: var(--color-white);
+                font-family: var(--font-roboto);
+                color: var(--color-black);
+                margin: 0.6rem 0 0 0;
+                resize: none;
+            }
+        }
+    }
 
     &_made{
         overflow-y: scroll;

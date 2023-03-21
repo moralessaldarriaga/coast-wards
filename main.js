@@ -76,7 +76,6 @@ const setImagePost = () => {
         const file = input.files[0];
         const formData = new FormData();
         formData.append('image', file);
-      
         getValidationImage(formData, loader, file);
 
     });
@@ -156,17 +155,6 @@ const sliderAnimation = () => {
         showSlides(slideIndex[no] += n, no);
     }
 
-    // const showSlides = (n, no) => {
-    //     let i;
-    //     const x = document.getElementsByClassName(slideId[no]);
-    //     if (n > x.length) {slideIndex[no] = 1}    
-    //     if (n < 1) {slideIndex[no] = x.length}
-    //     for (i = 0; i < x.length; i++) {
-    //         x[i].style.display = "none";  
-    //     }
-    //     x[slideIndex[no]-1].style.display = "block";  
-    // }
-
     const showSlides = (n, no) => {
         let i;
         const x = document.getElementsByClassName(slideId[no]);
@@ -228,10 +216,22 @@ const sliderAnimation = () => {
     showSlides(1, 5);
 }
 
+const closeReport = () => {
+    document.getElementById('closeReport').addEventListener('click', () => {
+        document.getElementById('messageReport').innerHTML = '';
+        document.getElementById('mapReportImage').value = '';
+        document.getElementById('mapReportImageMail').value = '';
+        document.getElementById('sendReport').style.opacity = '.5';
+        document.getElementById('sendReport').style.pointerEvents = 'none';
+        document.getElementById('mapBoxReport').classList.remove('show');
+    });
+}
+
 
 showMap();
 showTerms();
 closeTerms();
+closeReport();
 // showShared();
 // closeShared();
 openInputFile();

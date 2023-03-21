@@ -1,5 +1,6 @@
 import mapboxgl from 'mapbox-gl';
 import { getData } from './getMarker';
+import { reportImage } from './postReport';
 
 export const useMapBox = () => {
 
@@ -55,15 +56,11 @@ export const useMapBox = () => {
       // const coordinates = e.lngLat;
       const coordinates = e.features[0].geometry.coordinates.slice();
 
-      // while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-      //   coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-      // }
-
       const coordinatesHtmlPopup = '<div class="popup_info">' +
         '<div class="popup_info_bar">' +
-            // '<a rel="noopener noreferrer" class="popup_info_bar_report" title="report image">' + 
-            //   '<span class="material-icons material-symbols-outlined"> warning </span>' +
-            // '</a>' +
+            '<a rel="noopener noreferrer" data-uid="' + e.features[0].properties.uid + '" class="popup_info_bar_report" title="report image">' + 
+              '<span class="material-icons material-symbols-outlined"> warning </span>' +
+            '</a>' +
             '<p>' + e.features[0].properties.date + '</p>' +
         '</div>' +
         '<div class="popup_info_image" style="background-image: url(' + e.features[0].properties.image + ')">' +
@@ -71,14 +68,16 @@ export const useMapBox = () => {
         '</div>' +
         '<div class="popup_info_actions">' + 
           '<div class="popup_info_actions_type" style="background:' + e.features[0].properties.color + ';">' + e.features[0].properties.material +'</div>' +
-          '<a href="#" rel="noopener noreferrer" class="popup_info_actions_comments current_not" title="show current comments">' +
-            '<span class="material-icons material-symbols-outlined"> chat_bubble </span>' +
-          '</a>' +
+          (e.features[0].properties.comment ?
+            '<a href="#" rel="noopener noreferrer" class="popup_info_actions_comments current_not" title="show current comments">' +
+              '<span class="material-icons material-symbols-outlined"> chat_bubble </span>' +
+            '</a>' : '') +
           '<a href="#" rel="noopener noreferrer" class="popup_info_actions_close" title="close current popup">' +
             '<span class="material-icons material-symbols-outlined"> close </span>' +
           '</a>' +
         '</div>' +
       '</div>';
+
 
       const popup = new mapboxgl.Popup({ closeButton: false, anchor: 'bottom' })
         .setLngLat(coordinates)
@@ -123,11 +122,21 @@ export const useMapBox = () => {
       });
 
       const popupClose = document.querySelectorAll(".popup_info_actions_close");
+      const reportOpen = document.querySelectorAll('.popup_info_bar_report');
 
       popupClose.forEach(link => {
         link.addEventListener('click', e => {
-          e.preventDefault(); // Evita que la etiqueta se comporte como un enlace y recargue la página  
+          e.preventDefault();
           popup.remove();
+        });
+      });
+
+      reportOpen.forEach(linkReport => {
+        linkReport.addEventListener('click', e => {
+          e.preventDefault();
+          document.getElementById('mapBoxReport').classList.add('show');
+          const reportUid = linkReport.getAttribute('data-uid');
+          reportImage(reportUid);
         });
       });
 

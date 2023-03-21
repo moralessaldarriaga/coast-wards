@@ -6,7 +6,8 @@ export const useCloseForm = (marker) => {
     let map = useMapBox();
 
     document.getElementById('tableData').innerHTML = '';
-    document.getElementById('tableData').classList.display = 'none';
+    document.getElementById('tableData').style.display = 'none';
+    document.getElementById('openCollection').nextElementSibling.classList.remove('rotate');
 
     marker.remove();
     

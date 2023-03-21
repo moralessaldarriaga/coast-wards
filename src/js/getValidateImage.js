@@ -19,7 +19,7 @@ export const getValidationImage = async(formData, loader, file) => {
 
             const data = await response.json();
 
-            console.log(data);
+            // console.log(data);
 
 
             // AQUÍ MANEJAMOS EVENTOS CON LA RESP DEL SERVIDOR
@@ -97,12 +97,12 @@ export const getValidationImage = async(formData, loader, file) => {
                     const el = document.createElement('div');
 
                      // CARGAMOS LA IMAGEN DEL FILE 
-                     const readerFile = new FileReader();
-                     readerFile.readAsDataURL(file);
-                     readerFile.onloadend = function () {
-                         const base64Reader = readerFile.result;
-                         el.innerHTML = '<div class="mapboxgl_image_bg" style="background-image: url(' + base64Reader + ');"></div><div class="mapboxgl_image_light"></div><div class="mapboxgl_image_tool"><div class="mapboxgl_image_tool_tip"></div></div>';
-                     }
+                    //  const readerFile = new FileReader();
+                    //  readerFile.readAsDataURL(file);
+                    //  readerFile.onloadend = function () {
+                        //  const base64Reader = readerFile.result;
+                    el.innerHTML = '<div class="mapboxgl_image_bg" style="background-image: url(' + data.marked.properties.image + ');"></div><div class="mapboxgl_image_light"></div><div class="mapboxgl_image_tool"><div class="mapboxgl_image_tool_tip"></div></div>';
+                    //  }
                      el.style.width = '200px';
                      el.style.height = '200px';
                      
@@ -156,7 +156,6 @@ export const getValidationImage = async(formData, loader, file) => {
                         // MOSTRAMOS EL FORMULARIO, MOSTRAMOS LA IMAGEN Y ELIMINAMOS EL CONTENEDOR CON LOS BOTONES DE ACCION
                         document.getElementById('mapBoxForm').classList.add('show');
                         document.querySelector('.mapboxgl_snackbar').remove();
-                        document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ data.marked.properties.image +')';
 
                         formApplication(data, newMarker, 0);
 
@@ -466,6 +465,8 @@ export const getValidationImage = async(formData, loader, file) => {
                         </table>`;
 
                         elementTablePadre.insertBefore(elementTable, elementTablePadre.firstChild);
+
+                        document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ data.marked.properties.image +')';
                     });
 
                     // RETORNAR A LA VIEW HOME
@@ -818,7 +819,7 @@ export const getValidationImage = async(formData, loader, file) => {
                     </table>`;
 
                     elementTablePadre.insertBefore(elementTable, elementTablePadre.firstChild);
-
+                    document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ data.marked.properties.image +')';
 
                 });
 
@@ -1011,7 +1012,7 @@ export const getValidationImage = async(formData, loader, file) => {
                                 .then((response) => response.json())
                                 .then((data) => {
 
-                                    console.log(data);
+                                    const imageCompress = data.marked.properties.image;
 
                                     //creamos la tabla con los metadatos
                                     const elementTable = document.createElement('table');
@@ -1320,7 +1321,7 @@ export const getValidationImage = async(formData, loader, file) => {
 
                                     elementTablePadre.insertBefore(elementTable, elementTablePadre.firstChild);
 
-                                    formDraggable(data.id, marker, file);
+                                    formDraggable(data.id, marker, imageCompress);
                                 });
 
                             }

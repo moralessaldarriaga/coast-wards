@@ -107,17 +107,17 @@ export const formApplication = (data, marker, edit = 1) => {
 }
 
 // FLUJO CUANDO LA IMAGEN NO TIENE GPS
-export const formDraggable = (id, marker, file) => {
+export const formDraggable = (id, marker, imageCompress) => {
 
     // AQUÍ ENVIAMOS LOS DATOS DEL FORMULARIO AL POST
     getsData(id, marker);
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = function () {
-        const base64String = reader.result;
-        document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ base64String + ')';
-    }
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onloadend = function () {
+        // const base64String = reader.result;
+    document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ imageCompress + ')';
+    // }
 
 
     // AQUÍ SE PUEDE ESCOGER EL DATA TYPE CON VALORES DE LAS OPCIONES MATERIAL
