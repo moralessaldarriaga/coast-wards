@@ -51,7 +51,7 @@
               <p>Compártelo</p>
             </div> -->
             <div class="actions_btns">
-              <a href="#" rel="noopener noreferrer" id="useFormPhoto">
+              <a href="#" rel="noopener noreferrer" id="useFormPhoto" onclick="gaEventSubirFoto();">
                 <span class="material-icons material-symbols-outlined">
                   add_a_photo
                 </span>
@@ -294,7 +294,7 @@
             </div>
             <div class="mapbox_form_actions_btns">
               <a href="#" class="btn btn__empty" rel="noopener noreferrer" id="closeForm">Cancelar</a>
-              <a href="#" class="btn btn__blue" rel="noopener noreferrer" id="sendForm" style="pointer-events: none; opacity: .5;">Subir</a>
+              <a href="#" class="btn btn__blue" rel="noopener noreferrer" id="sendForm" onclick="gaEventGuardarFoto();" style="pointer-events: none; opacity: .5;">Subir</a>
             </div>
           </div>
           <div class="mapbox_form_inputs">
@@ -311,8 +311,8 @@
                   ¿Recuerdas exactamente dondé sacaste esta foto? 
                 </h2>
                 <div class="mapbox_coordinates_actions">
-                  <a href="#" id="mapBoxSearchCoordinate" rel="noopener noreferrer">Sí, lo recuerdo</a>
-                  <a href="#" id="mapBoxReturnHome" rel="noopener noreferrer">No, no me acuerdo</a>
+                  <a href="#" id="mapBoxSearchCoordinate" rel="noopener noreferrer" onclick="gaEventSiRecuerdo();">Sí, lo recuerdo</a>
+                  <a href="#" id="mapBoxReturnHome" rel="noopener noreferrer" onclick="gaEventNoRecuerdo();">No, no me acuerdo</a>
                 </div>
             </div>
         </div>
@@ -366,6 +366,58 @@
           'element_text': 'Ver-Mapa-App',
           'campaign_description': 'Guardacostas'
         });
+
+        function gaEventSubirFoto() {
+          dataLayer.push({
+            'event': 'GAEvent',​
+            'event_category': 'Content',
+            'event_action': 'Content', 
+            'event_label': 'Subir-foto-App',
+            'interaction':'true',
+            'component_name': 'Subir-foto-App',
+            'element_text': 'Subir-foto-App',
+            'campaign_description': 'Guardacostas'
+          });
+        }
+
+        function gaEventNoRecuerdo() {
+          dataLayer.push({
+            'event': 'GAEvent',​
+            'event_category': 'Content',
+            'event_action': 'Content', 
+            'event_label': 'No-me-acuerdo',
+            'interaction':'true',
+            'component_name': 'No-me-acuerdo-App',
+            'element_text': 'No-me-acuerdo-App',
+            'campaign_description': 'Guardacostas'
+          });
+        }
+
+        function gaEventSiRecuerdo() {
+          dataLayer.push({
+            'event': 'GAEvent',​
+            'event_category': 'Content',
+            'event_action': 'Content', 
+            'event_label': 'Si-lo-recuerdo',
+            'interaction':'true',
+            'component_name': 'Si-lo-recuerdo-App',
+            'element_text': 'Si-lo-recuerdo-App',
+            'campaign_description': 'Guardacostas'
+          });
+        }
+
+        function gaEventGuardarFoto() {
+          dataLayer.push({
+            'event': 'GAEvent',​
+            'event_category': 'Content',
+            'event_action': 'Content', 
+            'event_label': 'Subir-Foto-Exitosa-App',
+            'interaction':'true',
+            'component_name': 'Foto-Exitosa-App',
+            'element_text': 'Foto-Exitosa-App',
+            'campaign_description': 'Guardacostas'
+          });
+        }
       }
     </script>
   </body>
