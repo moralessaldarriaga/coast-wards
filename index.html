@@ -15,8 +15,8 @@
     })(window,document,'script','dataLayer','GTM-WCKWTZ2');</script>
     <!-- End Google Tag Manager -->
   
-    <script type="module" crossorigin src="/coast-wards/assets/index-a902f123.js"></script>
-    <link rel="stylesheet" href="/coast-wards/assets/index-afdf800f.css">
+    <script type="module" crossorigin src="/coast-wards/assets/index-b0b62061.js"></script>
+    <link rel="stylesheet" href="/coast-wards/assets/index-47c962d5.css">
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -40,14 +40,6 @@
           <h1>Guardacostas Corona.</h1>
           <h2>Sube una foto y ayuda a la ciencia a monitorear las costas.</h2>
           <div class="actions_block">
-            <!-- <div class="actions_btns">
-              <a href="#" rel="noopener noreferrer" id="showShared">
-                <span class="material-icons material-symbols-outlined">
-                  share
-                </span>
-              </a>
-              <p>Compártelo</p>
-            </div> -->
             <div class="actions_btns">
               <a href="#" rel="noopener noreferrer" id="useFormPhoto" onclick="gaEventSubirFoto();">
                 <span class="material-icons material-symbols-outlined">
@@ -306,10 +298,10 @@
         <div id="mapBoxCoordinates" class="mapbox_coordinates">
             <div class="mapbox_coordinates_block">
                 <h2>No podemos encontrar la localización de tu imagen.
-                  ¿Recuerdas exactamente dondé sacaste esta foto? 
+                  Por favor, dinos dónde tomaste la foto:
                 </h2>
+                <div class="mapbox_coordinates_geocoder" id="mapBoxGeocoder"></div>
                 <div class="mapbox_coordinates_actions">
-                  <a href="#" id="mapBoxSearchCoordinate" rel="noopener noreferrer" onclick="gaEventSiRecuerdo();">Sí, lo recuerdo</a>
                   <a href="#" id="mapBoxReturnHome" rel="noopener noreferrer" onclick="gaEventNoRecuerdo();">No, no me acuerdo</a>
                 </div>
             </div>
@@ -338,17 +330,18 @@
     </div>
     
     <script type="text/javascript">
-      function gaEventVerMapa() {
-        dataLayer.push({
-          'event': 'GAEvent',
-          'event_category': 'Content',
-          'event_action': 'Content', 
-          'event_label': 'Ver-Mapa-App',
-          'interaction': 'true',
-          'component_name': 'Ver-Mapa-App',
-          'element_text': 'Ver-Mapa-App',
-          'campaign_description': 'Guardacostas'
-        });
+        function gaEventVerMapa() {
+          dataLayer.push({
+            'event': 'GAEvent',
+            'event_category': 'Content',
+            'event_action': 'Content', 
+            'event_label': 'Ver-Mapa-App',
+            'interaction': 'true',
+            'component_name': 'Ver-Mapa-App',
+            'element_text': 'Ver-Mapa-App',
+            'campaign_description': 'Guardacostas'
+          });
+        }
 
         function gaEventSubirFoto() {
           dataLayer.push({
@@ -376,19 +369,6 @@
           });
         }
 
-        function gaEventSiRecuerdo() {
-          dataLayer.push({
-            'event': 'GAEvent',
-            'event_category': 'Content',
-            'event_action': 'Content', 
-            'event_label': 'Si-lo-recuerdo',
-            'interaction':'true',
-            'component_name': 'Si-lo-recuerdo-App',
-            'element_text': 'Si-lo-recuerdo-App',
-            'campaign_description': 'Guardacostas'
-          });
-        }
-
         function gaEventGuardarFoto() {
           dataLayer.push({
             'event': 'GAEvent',
@@ -401,7 +381,6 @@
             'campaign_description': 'Guardacostas'
           });
         }
-      }
     </script>
   </body>
 </html>
