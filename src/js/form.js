@@ -14,6 +14,8 @@ const getsData = (idGet, markerGet) => {
 document.getElementById('sendForm').addEventListener('click', (e) => {
     e.preventDefault();
 
+    document.getElementById('mapBoxGeocoder').innerHTML = '';
+    document.querySelector('.mapbox_form_loader').style.display = 'flex';
     document.getElementById('tableData').innerHTML = '';
     document.getElementById('tableData').classList.display = 'none';
     usePostForm(id, marker);
@@ -81,6 +83,8 @@ export const formApplication = (data, marker, edit = 1) => {
     document.getElementById('closeForm').addEventListener('click', (e) => {
         e.preventDefault();
 
+        document.querySelector('.mapbox_form_loader').style.display = 'flex';
+        document.querySelector('.mapbox_form_information_image').style.backgroundImage = '';
         document.getElementById('mapBoxForm').classList.remove('show');
         document.getElementById("mapFormComment").value = "";
         document.getElementById('checkTerms').checked = false;
@@ -112,12 +116,13 @@ export const formDraggable = (id, marker, imageCompress) => {
     // AQUÍ ENVIAMOS LOS DATOS DEL FORMULARIO AL POST
     getsData(id, marker);
 
-    // const reader = new FileReader();
-    // reader.readAsDataURL(file);
-    // reader.onloadend = function () {
-        // const base64String = reader.result;
-    document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ imageCompress + ')';
-    // }
+
+    const imagenFondo = new Image();
+    imagenFondo.onload = function() {
+        document.querySelector('.mapbox_form_loader').style.display = 'none';
+        document.querySelector('.mapbox_form_information_image').style.backgroundImage = 'url('+ imageCompress + ')';
+    };
+    imagenFondo.src = imageCompress;
 
 
     // AQUÍ SE PUEDE ESCOGER EL DATA TYPE CON VALORES DE LAS OPCIONES MATERIAL
@@ -143,12 +148,14 @@ export const formDraggable = (id, marker, imageCompress) => {
             }
         });
     });
-
+    
 
     // AQUÍ SE CIERRA EL FORM Y VUELVE AL HOME
     document.getElementById('closeForm').addEventListener('click', (e) => {
         e.preventDefault();
 
+        document.querySelector('.mapbox_form_loader').style.display = 'flex';
+        document.querySelector('.mapbox_form_information_image').style.backgroundImage = '';
         document.getElementById('mapBoxForm').classList.remove('show');
         document.getElementById("mapFormComment").value = "";
         document.getElementById('checkTerms').checked = false;
@@ -161,13 +168,13 @@ export const formDraggable = (id, marker, imageCompress) => {
             childContentType.classList.remove('active');
         });
         
-
-        useCloseForm(marker);
-
         document.getElementById('mapBoxAction').querySelector('.err_block').remove();
         document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
         document.getElementById('mapBoxAction').querySelector('h2').style.display = 'block';
         document.getElementById('mapBoxAction').classList.remove('hidden');
+        document.getElementById('mapBoxGeocoder').innerHTML = '';
+
+        useCloseForm(marker);
 
     });
 

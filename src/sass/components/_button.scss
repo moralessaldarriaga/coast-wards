@@ -16,6 +16,11 @@
         background: var(--main-color);
         border-color: var(--main-color);
         width: min(100%, 200px);
+        transition: all 400ms ease;
+
+        &:hover{
+            background: var(--second-color);
+        }
     }
 
     &__empty{

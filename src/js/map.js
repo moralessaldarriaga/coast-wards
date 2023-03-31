@@ -185,7 +185,7 @@ export const useMapBox = () => {
         '</div>' +
         '<div class="mapboxgl_legend_item">' +
           '<div class="mapboxgl_legend_dot mapboxgl_legend_dot__made"></div>' +
-          '<p>Hecho por humanos</p>' +
+          '<p>Construcciones humanas</p>' +
         '</div>' +
       '</div>' +
       '<div class="mapboxgl_legend_count">' + showCountValue + '</div>';

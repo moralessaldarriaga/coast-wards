@@ -12,22 +12,6 @@ const showMap = () => {
         document.querySelector('.mapboxgl_file').style.display = 'flex';
         document.querySelector('.mapboxgl_legend').style.display = 'flex';
     });
-} 
-
-const showTerms = () => {
-    const showViewTerms = document.getElementById('showTerms');
-    showViewTerms.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('mapBoxTerms').classList.add('show');
-    });
-}
-
-const closeTerms = () => {
-    const closeViewTerms = document.getElementById('closeTerms');
-    closeViewTerms.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('mapBoxTerms').classList.remove('show');
-    });
 }
 
 // const showShared = () => {
@@ -87,6 +71,7 @@ const returnHome = () => {
     btnReturn.addEventListener('click', (e) => {
         e.preventDefault();
 
+        document.getElementById('mapBoxGeocoder').innerHTML = '';
         document.getElementById('mapBoxCoordinates').classList.remove('show');
         document.getElementById('mapBoxAction').querySelector('h1').style.display = 'block';
         document.getElementById('mapBoxAction').classList.remove('hidden');
@@ -229,8 +214,6 @@ const closeReport = () => {
 
 
 showMap();
-showTerms();
-closeTerms();
 closeReport();
 // showShared();
 // closeShared();

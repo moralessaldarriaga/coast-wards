@@ -24,6 +24,11 @@
             background: var(--main-color);
             border-radius: 50%;
             box-shadow: 0 1px 1.5px 0 rgb(0 0 0 / 12%), 0 1px 1px 0 rgb(0 0 0 / 24%);
+            transition: all 400ms ease;
+
+            &:hover{
+                background: var(--second-color);
+            }
 
             span{
                 color: var(--color-white);

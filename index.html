@@ -21,33 +21,25 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCKWTZ2"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-  
+
     <div id="app">
       <div class="loading">
         <div class="main_content">
             <div class="loading_block">
-              <img src="/src/images/coastwards.svg" alt="coast_wards_logo" width="450" height="250">
+              <img src="/src/images/corona.png" alt="coast_wards_logo" width="450" height="250">
             </div>
         </div>
       </div>
       <div class="mapbox">
         <div id="mapBoxAction" class="mapbox_actions">
           <a class="mapbox_powerby" href="http://coastwards.org/" target="_blank" rel="noopener noreferrer">
-            <img src="/src/images/powerby_coastwards.svg" alt="" width="210" height="31" loading="lazy">
+            <img src="/src/images/powerby_coastwards.svg" alt="" width="105" height="16" loading="lazy">
           </a>
           <h1>Guardacostas Corona.</h1>
           <h2>Sube una foto y ayuda a la ciencia a monitorear las costas.</h2>
           <div class="actions_block">
-            <!-- <div class="actions_btns">
-              <a href="#" rel="noopener noreferrer" id="showShared">
-                <span class="material-icons material-symbols-outlined">
-                  share
-                </span>
-              </a>
-              <p>Compártelo</p>
-            </div> -->
             <div class="actions_btns">
-              <a href="#" rel="noopener noreferrer" id="useFormPhoto">
+              <a href="#" rel="noopener noreferrer" id="useFormPhoto" onclick="gaEventSubirFoto();">
                 <span class="material-icons material-symbols-outlined">
                   add_a_photo
                 </span>
@@ -56,7 +48,7 @@
               <input type="file" id="inputFile" accept="image/jpeg, image/png" style="display:none;">
             </div>
             <div class="actions_btns">
-              <a href="#" rel="noopener noreferrer" id="showMap">
+              <a href="#" rel="noopener noreferrer" id="showMap" onclick="gaEventVerMapa();">
                 <span class="material-icons material-symbols-outlined">
                   visibility
                 </span>
@@ -191,7 +183,7 @@
                     </div>
                   </div>
                   <div class="slider">
-                    <h2 style="color: rgb(36, 173, 187);">Hecho por humanos</h2>
+                    <h2 style="color: rgb(36, 173, 187);">Construcciones humanas</h2>
                     <div class="slider_content">
                       <div class="slides slides_6" style="background-image: url('src/images/slider/hechoporhumanos_01.jpeg');">
                       </div>
@@ -230,13 +222,17 @@
           </div>
         </div>
         <div id="mapBoxForm" class="mapbox_form">
+          <div class="mapbox_form_loader">
+            <h2>Estamos terminando de validar tu foto...</h2>
+            <div class="loader"><span class="loader_pulse"></span></div>
+          </div>
           <div class="mapbox_form_information">
             <div class="mapbox_form_information_image" style="background: #f2f2f2;"></div>
             <div class="mapbox_form_information_content">
-              <h2>¡Genial! Tu imagen está lista para subirse. Una preguntita más ...</h2>
+              <h2>¡Casi listo! Una preguntita más…</h2>
               <p>
-                <strong>¿Cómo describirías el material de costa? (opcional)</strong>
-                <a href="#" id="showMaterial" rel="noopener noreferrer">(¿Qué quiere decir 'material de la costa'?)</a>
+                <strong>¿Qué elemento predomina en el material de costa? (opcional)</strong>
+                <a href="#" id="showMaterial" rel="noopener noreferrer"> (¿Qué es el "material de la costa"?)</a>
               </p>
               <div id="mapBoxGetType" class="mapbox_form_information_content_options">
                 <div class="mapbox_form_information_content_type __sand" data-type="arena" data-color="#ffc417">
@@ -259,9 +255,9 @@
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
                   Hielo
                 </div>
-                <div class="mapbox_form_information_content_type __made" data-type="hecho por humanos" data-color="#24adbb">
+                <div class="mapbox_form_information_content_type __made" data-type="Construcciones humanas" data-color="#24adbb">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
-                  Hecho por humanos
+                  Construcciones humanas
                 </div>
                 <div class="mapbox_form_information_content_type __not" data-type="no estoy seguro" data-color="#a9a9a9">
                   <span class="material-icons material-symbols-outlined">radio_button_unchecked</span>
@@ -283,11 +279,11 @@
           <div class="mapbox_form_actions">
             <div class="mapbox_form_actions_terms">
               <input type="checkbox" id="checkTerms" name="checkTerms" value="terms">
-              <label for="checkTerms"> He leído y acepto los<a href="#" noopener noreferrer id="showTerms"> términos</a></label>
+              <label for="checkTerms"> He leído y acepto los <a href="src/images/Terminos_y_Condiciones_de_Uso_de_Guardacostas_Corona.pdf" target="_blank" noopener noreferrer id="showTerms">términos</a></label>
             </div>
             <div class="mapbox_form_actions_btns">
               <a href="#" class="btn btn__empty" rel="noopener noreferrer" id="closeForm">Cancelar</a>
-              <a href="#" class="btn btn__blue" rel="noopener noreferrer" id="sendForm" style="pointer-events: none; opacity: .5;">Subir</a>
+              <a href="#" class="btn btn__blue" rel="noopener noreferrer" id="sendForm" onclick="gaEventGuardarFoto();" style="pointer-events: none; opacity: .5;">Subir</a>
             </div>
           </div>
           <div class="mapbox_form_inputs">
@@ -301,28 +297,13 @@
         <div id="mapBoxCoordinates" class="mapbox_coordinates">
             <div class="mapbox_coordinates_block">
                 <h2>No podemos encontrar la localización de tu imagen.
-                  ¿Recuerdas exactamente dondé sacaste esta foto? 
+                  Por favor, dinos dónde tomaste la foto:
                 </h2>
+                <div class="mapbox_coordinates_geocoder" id="mapBoxGeocoder"></div>
                 <div class="mapbox_coordinates_actions">
-                  <a href="#" id="mapBoxSearchCoordinate" rel="noopener noreferrer">Sí, lo recuerdo</a>
-                  <a href="#" id="mapBoxReturnHome" rel="noopener noreferrer">No, no me acuerdo</a>
+                  <a href="#" id="mapBoxReturnHome" rel="noopener noreferrer" onclick="gaEventNoRecuerdo();">No, no me acuerdo</a>
                 </div>
             </div>
-        </div>
-        <div id="mapBoxTerms" class="mapbox_terms">
-          <div class="main_content">
-            <div class="mapbox_terms_action">
-              <a href="#" rel="noopener noreferrer" id="closeTerms">
-                <span class="material-icons material-symbols-outlined">
-                  close
-                </span>
-              </a>
-            </div>
-            <h1>Términos</h1>
-            <p>1) Al subir la imagen confirmas tener los derechos de autor.</p>
-            <p>2) Al subir la imagen confirmas que no tiene información personal, datos personales ni datos personales sensibles que te identifiquen o a partir de los cuales seas identificable, y que conoces y aceptas el aviso de privacidad <a href="https://www.grupomodelo.com/abilegal/politica-deproteccion-de-datos-personales" target="_blank" rel="noopener noreferrer">https://www.grupomodelo.com/abilegal/politica-deproteccion-de-datos-personales</a></p>
-            <p>3) Al subir la imagen confirmas que cedes los derechos de autor a Grupo Modelo SA de CV y colocas la imágen en el dominio público bajo la licencia <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/publicdomain/zero/1.0/deed.es_ES">Creative Commons CC0 1.0 Universal (CC0 1.0) Ofrecimiento al Dominio Público</a></p>
-          </div>
         </div>
         <div id="mapBoxReport" class="mapbox_report">
           <div class="main_content">
@@ -347,5 +328,58 @@
       </div>
     </div>
     <script type="module" src="main.js"></script>
+    <script type="text/javascript">
+        function gaEventVerMapa() {
+          dataLayer.push({
+            'event': 'GAEvent',
+            'event_category': 'Content',
+            'event_action': 'Content', 
+            'event_label': 'Ver-Mapa-App',
+            'interaction': 'true',
+            'component_name': 'Ver-Mapa-App',
+            'element_text': 'Ver-Mapa-App',
+            'campaign_description': 'Guardacostas'
+          });
+        }
+
+        function gaEventSubirFoto() {
+          dataLayer.push({
+            'event': 'GAEvent',
+            'event_category': 'Content',
+            'event_action': 'Content', 
+            'event_label': 'Subir-foto-App',
+            'interaction':'true',
+            'component_name': 'Subir-foto-App',
+            'element_text': 'Subir-foto-App',
+            'campaign_description': 'Guardacostas'
+          });
+        }
+
+        function gaEventNoRecuerdo() {
+          dataLayer.push({
+            'event': 'GAEvent',
+            'event_category': 'Content',
+            'event_action': 'Content', 
+            'event_label': 'No-me-acuerdo',
+            'interaction':'true',
+            'component_name': 'No-me-acuerdo-App',
+            'element_text': 'No-me-acuerdo-App',
+            'campaign_description': 'Guardacostas'
+          });
+        }
+
+        function gaEventGuardarFoto() {
+          dataLayer.push({
+            'event': 'GAEvent',
+            'event_category': 'Content',
+            'event_action': 'Content', 
+            'event_label': 'Subir-Foto-Exitosa-App',
+            'interaction':'true',
+            'component_name': 'Foto-Exitosa-App',
+            'element_text': 'Foto-Exitosa-App',
+            'campaign_description': 'Guardacostas'
+          });
+        }
+    </script>
   </body>
 </html>

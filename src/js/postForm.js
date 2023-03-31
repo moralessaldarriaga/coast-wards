@@ -61,6 +61,8 @@ export const usePostForm = (id, marker) => {
             childContentType.classList.remove('active');
         });
 
+        marker.remove();
+
         let map = useMapBox();
         
         map.flyTo({
@@ -81,6 +83,9 @@ export const usePostForm = (id, marker) => {
         mapActions.querySelector('h2').style.display = 'block';
         mapActions.querySelector('h1').innerHTML = '¡Gracias por ayudar a la ciencia! ¿Tienes otra fotografía?';
         mapActions.querySelector('h2').innerHTML = 'Mientras más fotos subas, más datos para los científicos.';
+        document.getElementById('tableData').innerHTML = '';
+        document.getElementById('tableData').style.display = 'none';
+        document.getElementById('openCollection').nextElementSibling.classList.remove('rotate');
         mapActions.classList.remove('hidden');
     
         if (mapActions.querySelector('.err_block') !== null) {
